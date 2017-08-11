@@ -11,7 +11,7 @@ use common\models\LoginForm;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
-use frontend\models\ContactForm;
+use frontend\models\MenuForm;
 
 /**
  * Site controller
@@ -109,13 +109,13 @@ class SiteController extends Controller
     }
 
     /**
-     * Displays contact page.
+     * Displays menu page.
      *
      * @return mixed
      */
-    public function actionContact()
+    public function actionMenu()
     {
-        $model = new ContactForm();
+        $model = new MenuForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail(Yii::$app->params['adminEmail'])) {
                 Yii::$app->session->setFlash('success', 'Thank you for contacting us. We will respond to you as soon as possible.');
@@ -125,20 +125,10 @@ class SiteController extends Controller
 
             return $this->refresh();
         } else {
-            return $this->render('contact', [
+            return $this->render('menu', [
                 'model' => $model,
             ]);
         }
-    }
-
-    /**
-     * Displays about page.
-     *
-     * @return mixed
-     */
-    public function actionAbout()
-    {
-        return $this->render('about');
     }
 
     /**
