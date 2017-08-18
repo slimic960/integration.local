@@ -8,10 +8,18 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
+use common\models\MappingCountryIdDvad;
+use common\models\MappingDeliveryServiceDvad;
+use common\models\MappingOfferProductIdDvad;
+use common\models\MappingProductIdDvad;
+use common\models\MappingStatusesDvad;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\MenuForm;
+use frontend\models\Callcenter;
+use yii\data\Pagination;
+use yii\web\HttpException;
 
 /**
  * Site controller
@@ -72,7 +80,23 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $query  = callcenter::find();
+
+        $pagination = new Pagination([
+            'defaultPageSize' => 50,
+            'totalCount' => $query->count(),
+        ]);
+
+        $callcenter_name = $query->orderBy('id')
+            ->offset($pagination->offset)
+            ->limit($pagination->limit)
+            ->all();
+
+        return $this->render('index', [
+            'callcenter_name' => $callcenter_name,
+            'pagination' => $pagination,
+        ]);
+
     }
 
     /**
@@ -200,4 +224,69 @@ class SiteController extends Controller
             'model' => $model,
         ]);
     }
+
+
+    public function actionEditcall()
+    {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+        $id = \Yii::$app->request->get('id');
+        $callcenter = callcenter::findOne($id);
+        if(empty($callcenter)) throw new HttpException(404, 'Ошибка');
+    if($id == '3'){
+        $query  = mappingcountryiddvad::find();
+        $country_dvad = $query->orderBy('id')
+            ->limit(50)
+            ->all();
+        $country_count_dvad = count($country_dvad);
+
+        $query  = mappingdeliveryservicedvad::find();
+        $service_dvad = $query->orderBy('id')
+            ->limit(50)
+            ->all();
+        $service_count_dvad = count($service_dvad);
+
+        $query  = mappingofferproductiddvad::find();
+        $offer_dvad = $query->orderBy('id')
+            ->limit(50)
+            ->all();
+
+        $query  = mappingproductiddvad::find();
+        $product_dvad = $query->orderBy('id')
+            ->limit(50)
+            ->all();
+        $product_count_dvad = count($product_dvad);
+
+        $query  = mappingstatusesdvad::find();
+        $status_dvad = $query->orderBy('id')
+            ->limit(50)
+            ->all();
+
+        $model = new MappingCountryIdDvad();
+        if($model->load(\Yii::$app->request->post()) && $model->validate()){
+            $model->order_delivery_address_countryIso = $model->fieldedit;
+            $model->sp_so_country = $model->callcenter;
+            $model->save();
+            return $this->refresh();
+        }
+
+
+        return $this->render('editcall', compact(
+            'callcenter',
+            'country_dvad',
+            'service_dvad',
+            'offer_dvad',
+            'product_dvad',
+            'status_dvad',
+            'country_count_dvad',
+            'service_count_dvad',
+            'product_count_dvad',
+            'model'
+        ));
+         }
+    }
+
+
 }
+
