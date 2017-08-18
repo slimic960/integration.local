@@ -4,6 +4,7 @@ use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\MappingCountryIdDvad */
+/* @var $modelCountry common\models\MappingDeliveryServiceDvad */
 
 //$this->title = 'Update Mapping Country Id Dvad: ' . $model->id;
 //$this->params['breadcrumbs'][] = ['label' => 'Mapping Country Id Dvads', 'url' => ['index']];

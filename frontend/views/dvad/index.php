@@ -59,7 +59,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
 
-                    'id',
                     'order_delivery_address_countryIso',
                     'sp_so_country',
 
@@ -68,12 +67,12 @@ $this->params['breadcrumbs'][] = $this->title;
                         'headerOptions' => ['width' => '60'],
                         'template' => '{update} {delete}',
                         'buttons' => [
-                            'update' => function ($url, $modelCountry, $key) {
+                            'update' => function ($url, $modelCountry) {
                                 $options = [
-                                    'title' => Yii::t('yii', 'update'),
-                                    'aria-label' => Yii::t('yii', 'update'),
-                                    'data-toggle' => Yii::t('yii', 'modelCountry'),
-                                    'data-target' => Yii::t('yii', '#modal_update'),
+                                    'title' => Yii::t('yii', 'Изменить'),
+                                    'aria-label' => Yii::t('yii', 'Изменить'),
+                                    'data-toggle' => Yii::t('yii', 'modal'),
+                                    'data-target' => Yii::t('yii', '#modal_update_country'),
                                 ];
                                 return Html::a(
                                     '<i class="material-icons button edit">edit</i>',
@@ -81,14 +80,14 @@ $this->params['breadcrumbs'][] = $this->title;
                             },
                             'delete' => function ($url, $modelCountry) {
                                 $options = [
-                                    'title' => Yii::t('yii', 'Delete'),
-                                    'aria-label' => Yii::t('yii', 'Delete'),
+                                    'title' => Yii::t('yii', 'Удалить'),
+                                    'aria-label' => Yii::t('yii', 'Удалить'),
                                     'data-confirm' => Yii::t('yii', 'Вы уверены что хотите удалить?'),
                                     'data-method' => 'post',
                                     'data-pjax' => '0',
                                 ];
                                 return Html::a(
-                                    '<i class="material-icons button edit">delete</i>',
+                                    '<i class="material-icons button delete">delete</i>',
                                     $url, $options, $modelCountry);
                             },
                         ],
@@ -139,7 +138,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'dataProvider' => $dataProviderService,
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
-                    'id',
                     'order_delivery_code',
                     'sp_delivery_service',
                     [
@@ -151,7 +149,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 $options = [
                                     'title' => Yii::t('yii', 'Изменить'),
                                     'aria-label' => Yii::t('yii', 'Изменить'),
-                                    'data-toggle' => Yii::t('yii', 'modal_update_service'),
+                                    'data-toggle' => Yii::t('yii', 'modal'),
                                     'data-target' => Yii::t('yii', '#modal_update_service'),
                                 ];
                                 return Html::a(
@@ -167,7 +165,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'data-pjax' => '0',
                                 ];
                                 return Html::a(
-                                    '<i class="material-icons button edit">delete</i>',
+                                    '<i class="material-icons button delete">delete</i>',
                                     $url, $options, $model);
                             },
                         ],

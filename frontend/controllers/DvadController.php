@@ -53,7 +53,7 @@ class DvadController extends Controller
         }
         $id = \Yii::$app->request->get('id');
         $callcenter = callcenter::findOne($id);
-        if($id == '3'){
+
             $query  = mappingcountryiddvad::find();
             $country_dvad = $query->orderBy('id')
                 ->limit(50)
@@ -88,12 +88,22 @@ class DvadController extends Controller
             if($model->load(\Yii::$app->request->post()) && $model->validate()){
                 if ($model->load(Yii::$app->request->post()) && $model->save()) {
                     return $this->redirect(['index', 'id' => 3]);
+                }else {
+                    return $this->redirect(['index', 'id' => 3]);
                 }
             }
             if($modelCountry->load(\Yii::$app->request->post()) && $modelCountry->validate()){
                 if ($modelCountry->load(Yii::$app->request->post()) && $modelCountry->save()) {
-                    return $this->redirect(['index', 'id' => $modelCountry->id]);
-                }
+                    return $this->redirect(['index', 'id' => 3]);
+                }else {
+                    return $this->redirect(['index', 'id' => 3]);
+                 }
+            }
+
+
+            $model = $this->findModel($id);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
             }
 
 
@@ -112,8 +122,6 @@ class DvadController extends Controller
                 'dataProviderCountry',
                 'dataProviderService'
             ));
-        }
-
     }
 
     /**
@@ -121,32 +129,32 @@ class DvadController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
+//    public function actionView($id)
+//    {
+//        return $this->render('view', [
+//            'model' => $this->findModel($id),
+//        ]);
+//    }
 
     /**
      * Creates a new MappingCountryIdDvad model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
-        $model = new MappingCountryIdDvad();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-
-            return $this->redirect(['view', 'id' => $model->id]);
-
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
-        }
-    }
+//    public function actionCreate()
+//    {
+//        $model = new MappingCountryIdDvad();
+//
+//        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+//
+//            return $this->redirect(['view', 'id' => $model->id]);
+//
+//        } else {
+//            return $this->render('create', [
+//                'model' => $model,
+//            ]);
+//        }
+//    }
 
     /**
      * Updates an existing MappingCountryIdDvad model.
@@ -156,14 +164,25 @@ class DvadController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+        if(($modelCountry = MappingCountryIdDvad::findOne($id)) !== null) {
+            $modelCountry = $this->findModel($id);
+            if ($modelCountry->load(Yii::$app->request->post()) && $modelCountry->save()) {
+                return $this->redirect(['view', 'id' => $modelCountry->id]);
+            } else {
+                return $this->render('update', [
+                    'model' => $modelCountry,
+                ]);
+            }
+        }
+        if(($model = MappingDeliveryServiceDvad::findOne($id)) !== null) {
+            $model = $this->findModel($id);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                return $this->render('update', [
+                    'model' => $model,
+                ]);
+            }
         }
     }
 
@@ -190,10 +209,10 @@ class DvadController extends Controller
     protected function findModel($id)
     {
         if (($model = MappingDeliveryServiceDvad::findOne($id)) !== null) {
-            return $model;
+                return $model;
         } elseif(($modelCountry = MappingCountryIdDvad::findOne($id)) !== null) {
                 return $modelCountry;
-             } else {
+        } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
