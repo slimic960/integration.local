@@ -15,7 +15,7 @@ $this->title = 'My Yii Application';
             <?php foreach ($callcenter_name as $v): ?>
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        <a href="<?= yii\helpers\Url::to(['dvad/index', 'id'=> $v -> id])?>"><?= Html::encode("{$v->callcenter_name} ({$v->id})") ?>:</a>
+                        <a href="<?= yii\helpers\Url::to(['/'.$v->callcenter_code.'/index'])?>"><?= Html::encode("{$v->callcenter_name}") ?>:</a>
                     </div>
                 </div>
             <?php endforeach; ?>

@@ -46,7 +46,7 @@ class MappingProductIdDvad extends \yii\db\ActiveRecord
             'id' => 'ID',
             'order_items_productId' => 'Order Items Product ID',
             'productid' => 'Productid',
-            'product_name' => 'Product Name',
+            'product_name' => 'Название продукта',
         ];
     }
 }

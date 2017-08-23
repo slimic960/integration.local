@@ -3,20 +3,19 @@
 namespace frontend\controllers;
 
 use Yii;
-use common\models\MappingCountryIdDvad;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use frontend\models\Callcenter;
+use common\models\MappingCountryIdDvad;
 use common\models\MappingDeliveryServiceDvad;
 use common\models\MappingOfferProductIdDvad;
 use common\models\MappingProductIdDvad;
 use common\models\MappingStatusesDvad;
+use common\models\MappingCountryIdDvadSearch;
 
-/**
- * DvadController implements the CRUD actions for MappingCountryIdDvad model.
- */
+
 class DvadController extends Controller
 {
     /**
@@ -44,15 +43,26 @@ class DvadController extends Controller
             'query' => MappingDeliveryServiceDvad::find(),
         ]);
 
-        $dataProviderCountry = new ActiveDataProvider([
-            'query' => MappingCountryIdDvad::find(),
+
+        $dataProviderOfferId = new ActiveDataProvider([
+            'query' => MappingOfferProductIdDvad::find(),
         ]);
 
-        if (Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-        $id = \Yii::$app->request->get('id');
-        $callcenter = callcenter::findOne($id);
+        $dataProviderProductId = new ActiveDataProvider([
+            'query' => MappingProductIdDvad::find(),
+            'pagination' => [
+                'pageSize' => 15,
+            ],
+        ]);
+
+        $searchModel = new MappingCountryIdDvadSearch();
+        $dataProviderCountry = $searchModel->search(Yii::$app->request->queryParams);
+
+            if (Yii::$app->user->isGuest) {
+                return $this->goHome();
+            }
+            $id = \Yii::$app->request->get('id');
+            $callcenter = callcenter::findOne($id);
 
             $query  = mappingcountryiddvad::find();
             $country_dvad = $query->orderBy('id')
@@ -70,6 +80,7 @@ class DvadController extends Controller
             $offer_dvad = $query->orderBy('id')
                 ->limit(50)
                 ->all();
+            $offer_count_dvad = count($offer_dvad);
 
             $query  = mappingproductiddvad::find();
             $product_dvad = $query->orderBy('id')
@@ -82,32 +93,41 @@ class DvadController extends Controller
                 ->limit(50)
                 ->all();
 
-            $model = new MappingDeliveryServiceDvad();
+            $modelService = new MappingDeliveryServiceDvad();
             $modelCountry = new MappingCountryIdDvad();
+            $modelOfferId = new MappingOfferProductIdDvad();
+            $modelProductId = new MappingProductIdDvad();
 
-            if($model->load(\Yii::$app->request->post()) && $model->validate()){
-                if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                    return $this->redirect(['index', 'id' => 3]);
+            if($modelService->load(\Yii::$app->request->post()) && $modelService->validate()){
+                if ($modelService->load(Yii::$app->request->post()) && $modelService->save()) {
+                    return $this->redirect(['index']);
                 }else {
-                    return $this->redirect(['index', 'id' => 3]);
+                    return $this->redirect(['index']);
                 }
             }
             if($modelCountry->load(\Yii::$app->request->post()) && $modelCountry->validate()){
                 if ($modelCountry->load(Yii::$app->request->post()) && $modelCountry->save()) {
-                    return $this->redirect(['index', 'id' => 3]);
+                    return $this->redirect(['index']);
                 }else {
-                    return $this->redirect(['index', 'id' => 3]);
+                    return $this->redirect(['index']);
                  }
             }
-
-
-            $model = $this->findModel($id);
-            if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            if($modelOfferId->load(\Yii::$app->request->post()) && $modelOfferId->validate()){
+                if ($modelOfferId->load(Yii::$app->request->post()) && $modelOfferId->save()) {
+                    return $this->redirect(['index']);
+                }else {
+                    return $this->redirect(['index']);
+                }
+            }
+            if($modelProductId->load(\Yii::$app->request->post()) && $modelProductId->validate()){
+                if ($modelProductId->load(Yii::$app->request->post()) && $modelProductId->save()) {
+                    return $this->redirect(['index']);
+                }else {
+                    return $this->redirect(['index']);
+                }
             }
 
-
-            return $this->render('index', compact(
+            return  $this->render('index', compact(
                 'callcenter',
                 'country_dvad',
                 'service_dvad',
@@ -117,44 +137,18 @@ class DvadController extends Controller
                 'country_count_dvad',
                 'service_count_dvad',
                 'product_count_dvad',
-                'model',
+                'offer_count_dvad',
+                'modelService',
                 'modelCountry',
+                'modelOfferId',
+                'modelProductId',
                 'dataProviderCountry',
-                'dataProviderService'
+                'dataProviderService',
+                'dataProviderOfferId',
+                'dataProviderProductId',
+                'searchModel'
             ));
     }
-
-    /**
-     * Displays a single MappingCountryIdDvad model.
-     * @param integer $id
-     * @return mixed
-     */
-//    public function actionView($id)
-//    {
-//        return $this->render('view', [
-//            'model' => $this->findModel($id),
-//        ]);
-//    }
-
-    /**
-     * Creates a new MappingCountryIdDvad model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
-//    public function actionCreate()
-//    {
-//        $model = new MappingCountryIdDvad();
-//
-//        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-//
-//            return $this->redirect(['view', 'id' => $model->id]);
-//
-//        } else {
-//            return $this->render('create', [
-//                'model' => $model,
-//            ]);
-//        }
-//    }
 
     /**
      * Updates an existing MappingCountryIdDvad model.
@@ -162,29 +156,54 @@ class DvadController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id)
+    public function actionCountryUpdate($id)
     {
-        if(($modelCountry = MappingCountryIdDvad::findOne($id)) !== null) {
-            $modelCountry = $this->findModel($id);
-            if ($modelCountry->load(Yii::$app->request->post()) && $modelCountry->save()) {
-                return $this->redirect(['view', 'id' => $modelCountry->id]);
-            } else {
-                return $this->render('update', [
-                    'model' => $modelCountry,
-                ]);
-            }
-        }
-        if(($model = MappingDeliveryServiceDvad::findOne($id)) !== null) {
-            $model = $this->findModel($id);
-            if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
-            } else {
-                return $this->render('update', [
-                    'model' => $model,
-                ]);
-            }
+        $modelCountry = $this->findModelCountry($id);
+        if ($modelCountry->load(Yii::$app->request->post()) && $modelCountry->save()) {
+            return $this->redirect(['index']);
+        } else {
+            return $this->render('countryUpdate', [
+                'modelCountry' => $modelCountry,
+            ]);
         }
     }
+
+    public function actionServiceUpdate($id)
+    {
+        $modelService = $this->findModelService($id);
+        if ($modelService->load(Yii::$app->request->post()) && $modelService->save()) {
+            return $this->redirect(['index']);
+        } else {
+            return $this->render('serviceUpdate', [
+                'modelService' => $modelService,
+            ]);
+        }
+    }
+
+    public function actionOfferidUpdate($id)
+    {
+        $modelOfferId = $this->findModelOfferid($id);
+        if ($modelOfferId->load(Yii::$app->request->post()) && $modelOfferId->save()) {
+            return $this->redirect(['index']);
+        } else {
+            return $this->render('offeridUpdate', [
+                'modelOfferId' => $modelOfferId,
+            ]);
+        }
+    }
+
+    public function actionProductUpdate($id)
+    {
+        $modelProductId = $this->findModelProductid($id);
+        if ($modelProductId->load(Yii::$app->request->post()) && $modelProductId->save()) {
+            return $this->redirect(['index']);
+        } else {
+            return $this->render('productUpdate', [
+                'modelProductId' => $modelProductId,
+            ]);
+        }
+    }
+
 
     /**
      * Deletes an existing MappingCountryIdDvad model.
@@ -194,9 +213,9 @@ class DvadController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $this->findModelService($id)->delete();
 
-        return $this->redirect(['index', 'id' => 3]);
+        return $this->redirect(['index']);
     }
 
     /**
@@ -206,15 +225,43 @@ class DvadController extends Controller
      * @return MappingCountryIdDvad the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
+    protected function findModelService($id)
     {
-        if (($model = MappingDeliveryServiceDvad::findOne($id)) !== null) {
-                return $model;
-        } elseif(($modelCountry = MappingCountryIdDvad::findOne($id)) !== null) {
-                return $modelCountry;
+        if (($modelService = MappingDeliveryServiceDvad::findOne($id)) !== null) {
+                return $modelService;
         } else {
+        throw new NotFoundHttpException('The requested page does not exist.');
+         }
+    }
+
+
+    protected function findModelCountry($id)
+    {
+        if(($modelCountry = MappingCountryIdDvad::findOne($id)) !== null) {
+            return $modelCountry;
+        }else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
+    protected function findModelOfferid($id)
+    {
+        if(($modelOfferId = MappingOfferProductIdDvad::findOne($id)) !== null) {
+            return $modelOfferId;
+        }else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    protected function findModelProductid($id)
+    {
+        if(($modelProductId = MappingProductIdDvad::findOne($id)) !== null) {
+            return $modelProductId;
+        }else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+
 
 }

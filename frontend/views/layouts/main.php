@@ -32,21 +32,21 @@ AppAsset::register($this);
         'brandLabel' => 'Intergration',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
-            'class' => 'navbar-inverse navbar-fixed-top',
+            'class' => 'navbar-integ navbar-fixed-top',
         ],
     ]);
     $menuItems = [
-        ['label' => 'Menu', 'url' => ['/site/menu']],
+        ['label' => 'Меню', 'url' => ['/site/menu']],
     ];
     if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
-        $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
+        $menuItems[] = ['label' => 'Регистрация', 'url' => ['/site/signup']];
+        $menuItems[] = ['label' => 'Войти', 'url' => ['/site/login']];
     } else {
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->username . ')',
-                ['class' => 'btn btn-link logout']
+                'Выйти (' . Yii::$app->user->identity->username . ')',
+                ['class' => 'btn btn-link logout', ]
             )
             . Html::endForm()
             . '</li>';
@@ -66,13 +66,6 @@ AppAsset::register($this);
         <?= $content ?>
     </div>
 </div>
-
-<footer class="footer">
-    <div class="container">
-        <p class="pull-left">&copy; <?= date('Y') ?></p>
-
-    </div>
-</footer>
 
 <?php $this->endBody() ?>
 </body>
