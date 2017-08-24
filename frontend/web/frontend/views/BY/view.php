@@ -4,13 +4,13 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\MappingCountryIdDvad */
+/* @var $model common\models\MappingOffersBY */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Mapping Country Id Dvads', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Mapping Offers Bies', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="mapping-country-id-dvad-view">
+<div class="mapping-offers-by-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -29,8 +29,10 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'order_delivery_address_countryIso',
-            'sp_so_country',
+            'sp_offer',
+            'by_offer',
+            'productid',
+            'active',
         ],
     ]) ?>
 

@@ -4,6 +4,8 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\bootstrap\Modal;
 use yii\widgets\Pjax;
+use nirvana\showloading\ShowLoadingAsset;
+ShowLoadingAsset::register($this);
 
 
 $this->registerJsFile('/js/jquery.cookie.js',

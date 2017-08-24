@@ -19,6 +19,10 @@ $(document).ready(function() {
                 return false;
             });
         });
+
+    $('.edit, .breadcrumb li a').click(function () {
+        $('body').showLoading();
+    });
 });
 
 function cookieSet(index) {
