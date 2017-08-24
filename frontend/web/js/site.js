@@ -114,8 +114,11 @@ var randomizeColor = function () {
 randomizeColor();
 var t = setInterval(randomizeColor, 20000);
 
-
 $('body').click(function() {
     clearInterval(t);
     randomizeColor();
+});
+
+$('.thumbnail').click(function () {
+    $('body').showLoading();
 });

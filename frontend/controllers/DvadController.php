@@ -12,7 +12,6 @@ use common\models\MappingCountryIdDvad;
 use common\models\MappingDeliveryServiceDvad;
 use common\models\MappingOfferProductIdDvad;
 use common\models\MappingProductIdDvad;
-use common\models\MappingStatusesDvad;
 use common\models\MappingCountryIdDvadSearch;
 use common\models\MappingDeliveryServiceDvadSearch;
 use common\models\MappingOfferProductIdDvadSearch;
@@ -85,11 +84,6 @@ class DvadController extends Controller
                 ->limit(50)
                 ->all();
             $product_count_dvad = count($product_dvad);
-
-            $query  = mappingstatusesdvad::find();
-            $status_dvad = $query->orderBy('id')
-                ->limit(50)
-                ->all();
 
             $modelService = new MappingDeliveryServiceDvad();
             $modelCountry = new MappingCountryIdDvad();

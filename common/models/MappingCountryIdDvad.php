@@ -16,7 +16,7 @@ class MappingCountryIdDvad extends ActiveRecord
 
     public static function getDb()
     {
-        return \Yii::$app->userDb;
+        return \Yii::$app->dbDvad;
     }
     /**
      * @inheritdoc

@@ -132,7 +132,7 @@ a.desc:after {
 h1 {
     font-family: "arial", sans-serif;
     text-transform: uppercase;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.1em;
     font-size: 2.9em;
     text-shadow: 2px 1px #d3d3d3;
 }
@@ -153,10 +153,12 @@ h3 {
 .site-index .thumbnail{
     box-shadow: 1px 1px 5px -1px black;
     border: none;
+    transition: 1s
 }
 
 .site-index .thumbnail:hover{
     box-shadow: inset 0px 0px 7px 0px black;
+    transition: 3s
 }
 
 .navbar-integ{

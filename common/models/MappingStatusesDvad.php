@@ -17,7 +17,7 @@ class MappingStatusesDvad extends \yii\db\ActiveRecord
 {
     public static function getDb()
     {
-        return \Yii::$app->userDb;
+        return \Yii::$app->dbDvad;
     }
     /**
     /**
