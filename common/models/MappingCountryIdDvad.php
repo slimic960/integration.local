@@ -33,7 +33,8 @@ class MappingCountryIdDvad extends ActiveRecord
     public function rules()
     {
         return [
-            [['order_delivery_address_countryIso', 'sp_so_country', 'status_active'], 'string', 'max' => 45],
+            [['order_delivery_address_countryIso', 'sp_so_country'], 'string', 'max' => 45],
+            [['status_active'], 'integer'],
         ];
     }
 

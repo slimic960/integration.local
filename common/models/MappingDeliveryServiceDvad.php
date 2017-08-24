@@ -33,6 +33,7 @@ class MappingDeliveryServiceDvad extends \yii\db\ActiveRecord
     {
         return [
             [['order_delivery_code', 'sp_delivery_service'], 'string', 'max' => 45],
+            [['status_active'], 'integer'],
         ];
     }
 
@@ -45,6 +46,7 @@ class MappingDeliveryServiceDvad extends \yii\db\ActiveRecord
             'id' => 'ID',
             'order_delivery_code' => 'Код доставки',
             'sp_delivery_service' => 'Сервисы доставки',
+            'status_active' => 'Статус'
         ];
     }
 }

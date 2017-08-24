@@ -34,6 +34,7 @@ class MappingProductIdDvad extends \yii\db\ActiveRecord
     {
         return [
             [['order_items_productId', 'productid', 'product_name'], 'string', 'max' => 45],
+            [['status_active'], 'integer'],
         ];
     }
 
@@ -47,6 +48,7 @@ class MappingProductIdDvad extends \yii\db\ActiveRecord
             'order_items_productId' => 'Order Items Product ID',
             'productid' => 'Productid',
             'product_name' => 'Название продукта',
+            'status_active' => 'Статус'
         ];
     }
 }

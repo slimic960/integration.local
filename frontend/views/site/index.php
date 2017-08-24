@@ -5,22 +5,25 @@ use yii\widgets\LinkPager;
 /* @var $this yii\web\View */
 
 $this->title = 'My Yii Application';
+$this->registerJsFile('/js/site.js',
+    ['depends' => [\yii\web\JqueryAsset::className()]]
+);
 ?>
 <div class="site-index">
 
-
-    <div class="body-content">
-        <h1>Callcenter</h1>
-        <div class="row">
+    <div class="row">
             <?php foreach ($callcenter_name as $v): ?>
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <a href="<?= yii\helpers\Url::to(['/'.$v->callcenter_code.'/index'])?>"><?= Html::encode("{$v->callcenter_name}") ?>:</a>
-                    </div>
+                <div class="col-sm-6 col-md-4">
+                    <a href="<?= yii\helpers\Url::to(['/'.$v->callcenter_code.'/index'])?>">
+                        <div class="thumbnail color-block">
+                             <div class="caption">
+                                 <h3><?= Html::encode("{$v->callcenter_name}") ?></h3>
+                             </div>
+                         </div>
+            </a>
                 </div>
             <?php endforeach; ?>
-            <?= LinkPager::widget(['pagination' => $pagination]) ?>
-        </div>
+        <?= LinkPager::widget(['pagination' => $pagination]) ?>
     </div>
 
 </div>

@@ -47,7 +47,7 @@ class MappingOfferProductIdDvad extends \yii\db\ActiveRecord
             'id' => 'ID',
             'offer' => 'Оффер',
             'order_items_productId' => 'Order Items Product ID',
-            'active' => 'Active',
+            'active' => 'Статус',
         ];
     }
 }

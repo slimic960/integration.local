@@ -17,7 +17,7 @@ use yii\widgets\ActiveForm;
             <?= $form->field($modelService, 'order_delivery_code')->textInput(['maxlength' => true]) ?>
 
         <div class="form-group">
-            <?= Html::submitButton($modelService->isNewRecord ? 'Create' : 'Update', ['class' => $modelService->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+            <?= Html::submitButton($modelService->isNewRecord ? 'Добавить' : 'Обновить', ['class' => $modelService->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
         </div>
     <?php endif; ?>
     <?php ActiveForm::end(); ?>

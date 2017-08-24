@@ -4,8 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\bootstrap\Modal;
 use yii\widgets\Pjax;
-use yii\helpers\Url;
-use yii\bootstrap\ActiveForm;
+
 
 $this->registerJsFile('/js/jquery.cookie.js',
     ['depends' => [\yii\web\JqueryAsset::className()]]
@@ -35,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <p>
             <div>
                 <?php Modal::begin([
-                    'header' => '<h2>Страны</h2>',
+                    'header' => '<h2>Добавить страну</h2>',
                     'toggleButton' => [
                         'label' => 'Добавить',
                         'tag' => 'button',
@@ -53,16 +52,17 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php Pjax::begin(); ?>
             <?= GridView::widget([
                 'dataProvider' => $dataProviderCountry,
-                'filterModel' => $searchModel,
+                'filterModel' => $searchModelCountry,
+                'summary'=>'',
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
-
                     'order_delivery_address_countryIso',
                     'sp_so_country',
             [
                 'attribute' => 'status_active',
                 'format' => 'raw',
                 'filter' => [
+                    ''=> 'Показать всё',
                     0 => 'Удалена',
                     1 => 'Активна',
                 ],
@@ -79,9 +79,9 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
                     [
                         'class' => 'yii\grid\ActionColumn',
-                        'header'=>  Html::a('<i class="material-icons button refresh">settings_backup_restore</i>',['index']),
+                        'header'=>  Html::a('<i class="material-icons button refresh">settings_backup_restore</i>',['index'] , [ 'title' => Yii::t('app', 'Сбросить') ]),
                         'headerOptions' => ['width' => '60'],
-                        'template' => '{country-update} {delete}',
+                        'template' => '{country-update} {delete-country} {redelete-country}',
                         'buttons' => [
                             'country-update' => function ($url, $modelCountry) {
                                 $options = [
@@ -92,7 +92,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     '<i class="material-icons button edit">edit</i>',
                                      $url, $options, $modelCountry);
                             },
-                            'delete' => function ($url, $modelCountry) {
+                            'delete-country' => function ($url, $modelCountry) {
                                 $options = [
                                     'title' => Yii::t('yii', 'Удалить'),
                                     'aria-label' => Yii::t('yii', 'Удалить'),
@@ -100,9 +100,12 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'data-method' => 'post',
                                     'data-pjax' => '0',
                                 ];
-                                return Html::a(
-                                    '<i class="material-icons button delete">delete</i>',
-                                    $url, $options, $modelCountry);
+                                 return $modelCountry->status_active == 1 ? Html::a('
+                                    <i class="material-icons button delete">delete</i>', $url, $options) : '';
+                            },
+                            'redelete-country' => function ($url, $modelCountry) {
+                                return $modelCountry->status_active == 0 ? Html::a('
+                                    <i class="material-icons button redelete">undo</i>', $url, [ 'title' => Yii::t('app', 'Восстановить') ]) : '';
                             },
                         ],
                     ],
@@ -125,7 +128,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <p>
             <div>
                 <?php Modal::begin([
-                    'header' => '<h2>Сервисы</h2>',
+                    'header' => '<h2>Добавить сервис</h2>',
                     'toggleButton' => [
                         'label' => 'Добавить',
                         'tag' => 'button',
@@ -143,14 +146,36 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php Pjax::begin(); ?>
             <?= GridView::widget([
                 'dataProvider' => $dataProviderService,
+                'filterModel' => $searchModelService,
+                'summary'=>'',
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
                     'order_delivery_code',
                     'sp_delivery_service',
                     [
+                        'attribute' => 'status_active',
+                        'format' => 'raw',
+                        'filter' => [
+                            ''=> 'Показать всё',
+                            0 => 'Удалена',
+                            1 => 'Активна',
+                        ],
+                        'value' => function ($model, $key, $index, $column) {
+                            $active = $model->{$column->attribute} === 1;
+                            return \yii\helpers\Html::tag(
+                                'span',
+                                $active ? 'Активна' : 'Удалена',
+                                [
+                                    'class' => 'label label-' . ($active ? 'success' : 'danger'),
+                                ]
+                            );
+                        },
+                    ],
+                    [
                         'class' => 'yii\grid\ActionColumn',
+                        'header'=>  Html::a('<i class="material-icons button refresh">settings_backup_restore</i>',['index'] , [ 'title' => Yii::t('app', 'Сбросить') ]),
                         'headerOptions' => ['width' => '60'],
-                        'template' => '{service-update} {delete}',
+                        'template' => '{service-update} {delete-service} {redelete-service}',
                         'buttons' => [
                             'service-update' => function ($id, $modelService) {
                                 $options = [
@@ -161,7 +186,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     '<i class="material-icons button edit">edit</i>',
                                      $id, $options, $modelService);
                             },
-                            'delete' => function ($url, $modelService) {
+                            'delete-service' => function ($url, $modelService) {
                                 $options = [
                                     'title' => Yii::t('yii', 'Удалить'),
                                     'aria-label' => Yii::t('yii', 'Удалить'),
@@ -169,9 +194,12 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'data-method' => 'post',
                                     'data-pjax' => '0',
                                 ];
-                                return Html::a(
-                                    '<i class="material-icons button delete">delete</i>',
-                                    $url, $options, $modelService);
+                                return $modelService->status_active == 1 ? Html::a('
+                                    <i class="material-icons button delete">delete</i>', $url, $options) : '';
+                            },
+                            'redelete-service' => function ($url, $modelService) {
+                                return $modelService->status_active == 0 ? Html::a('
+                                    <i class="material-icons button redelete">undo</i>', $url, [ 'title' => Yii::t('app', 'Восстановить') ]) : '';
                             },
                         ],
 
@@ -195,7 +223,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <p>
             <div>
                 <?php Modal::begin([
-                    'header' => '<h2>Сервисы</h2>',
+                    'header' => '<h2>Добавить оффер</h2>',
                     'toggleButton' => [
                         'label' => 'Добавить',
                         'tag' => 'button',
@@ -210,42 +238,51 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?php Modal::end(); ?>
             </div>
             </p>
-
-<!--            --><?php //Modal::begin([
-//                'header' => 'Редактирование',
-//                'id' => 'modal_update_service',
-//            ]);  ?>
-<!--            --><?//= $this->render('serviceUpdate', [
-//                'modelOfferId' => $modelOfferId,
-//            ]);
-//            ?>
-<!--            --><?php //Modal::end(); ?>
-
             <?php Pjax::begin(); ?>
             <?= GridView::widget([
                 'dataProvider' => $dataProviderOfferId,
+                'filterModel' => $searchModelOfferId,
+                'summary'=>'',
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
                     'offer',
                     'order_items_productId',
                     [
+                        'attribute' => 'active',
+                        'format' => 'raw',
+                        'filter' => [
+                            ''=> 'Показать всё',
+                            0 => 'Удалена',
+                            1 => 'Активна',
+                        ],
+                        'value' => function ($model, $key, $index, $column) {
+                            $active = $model->{$column->attribute} === 1;
+                            return \yii\helpers\Html::tag(
+                                'span',
+                                $active ? 'Активна' : 'Удалена',
+                                [
+                                    'class' => 'label label-' . ($active ? 'success' : 'danger'),
+                                ]
+                            );
+                        },
+                    ],
+                    [
                         'class' => 'yii\grid\ActionColumn',
+                        'header'=>  Html::a('<i class="material-icons button refresh">settings_backup_restore</i>',['index'] , [ 'title' => Yii::t('app', 'Сбросить') ]),
                         'headerOptions' => ['width' => '60'],
-                        'template' => '{offerid-update} {delete}',
+                        'template' => '{offerid-update}{delete-offerid} {redelete-offerid}',
                         'buttons' => [
                             'offerid-update' => function ($id, $modelOfferId) {
                                 $options = [
                                     'title' => Yii::t('yii', 'Изменить'),
                                     'aria-label' => Yii::t('yii', 'Изменить'),
-//                                    'data-toggle' => Yii::t('yii', 'modal'),
-//                                    'data-target' => Yii::t('yii', '#modal_update_service'),
                                     'format'=> 'raw',
                                 ];
                                 return Html::a(
                                     '<i class="material-icons button edit">edit</i>',
                                     $id, $options, $modelOfferId);
                             },
-                            'delete' => function ($url, $modelOfferId) {
+                            'delete-offerid' => function ($url, $modelOfferId) {
                                 $options = [
                                     'title' => Yii::t('yii', 'Удалить'),
                                     'aria-label' => Yii::t('yii', 'Удалить'),
@@ -253,9 +290,12 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'data-method' => 'post',
                                     'data-pjax' => '0',
                                 ];
-                                return Html::a(
-                                    '<i class="material-icons button delete">delete</i>',
-                                    $url, $options, $modelOfferId);
+                                return $modelOfferId->active == 1 ? Html::a('
+                                    <i class="material-icons button delete">delete</i>', $url, $options) : '';
+                            },
+                            'redelete-offerid' => function ($url, $modelOfferId) {
+                                return $modelOfferId->active == 0 ? Html::a('
+                                    <i class="material-icons button redelete">undo</i>', $url, [ 'title' => Yii::t('app', 'Восстановить') ]) : '';
                             },
                         ],
 
@@ -279,7 +319,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <p>
             <div>
                 <?php Modal::begin([
-                    'header' => '<h2>Продукты</h2>',
+                    'header' => '<h2>Добавить продукт</h2>',
                     'toggleButton' => [
                         'label' => 'Добавить',
                         'tag' => 'button',
@@ -297,15 +337,37 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php Pjax::begin(); ?>
             <?= GridView::widget([
                 'dataProvider' => $dataProviderProductId,
+                'filterModel' => $searchModelProductId,
+                'summary'=>'',
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
                     'order_items_productId',
                     'productid',
                     'product_name',
                     [
+                        'attribute' => 'status_active',
+                        'format' => 'raw',
+                        'filter' => [
+                            ''=> 'Показать всё',
+                            0 => 'Удалена',
+                            1 => 'Активна',
+                        ],
+                        'value' => function ($model, $key, $index, $column) {
+                            $active = $model->{$column->attribute} === 1;
+                            return \yii\helpers\Html::tag(
+                                'span',
+                                $active ? 'Активна' : 'Удалена',
+                                [
+                                    'class' => 'label label-' . ($active ? 'success' : 'danger'),
+                                ]
+                            );
+                        },
+                    ],
+                    [
                         'class' => 'yii\grid\ActionColumn',
+                        'header'=>  Html::a('<i class="material-icons button refresh">settings_backup_restore</i>',['index'] , [ 'title' => Yii::t('app', 'Сбросить') ]),
                         'headerOptions' => ['width' => '60'],
-                        'template' => '{product-update} {delete}',
+                        'template' => '{product-update} {delete-productid} {redelete-productid}',
                         'buttons' => [
                             'product-update' => function ($id, $modelProductId) {
                                 $options = [
@@ -316,7 +378,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     '<i class="material-icons button edit">edit</i>',
                                     $id, $options, $modelProductId);
                             },
-                            'delete' => function ($url, $modelProductId) {
+                            'delete-productid' => function ($url, $modelProductId) {
                                 $options = [
                                     'title' => Yii::t('yii', 'Удалить'),
                                     'aria-label' => Yii::t('yii', 'Удалить'),
@@ -324,12 +386,14 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'data-method' => 'post',
                                     'data-pjax' => '0',
                                 ];
-                                return Html::a(
-                                    '<i class="material-icons button delete">delete</i>',
-                                    $url, $options, $modelProductId);
+                                return $modelProductId->status_active == 1 ? Html::a('
+                                    <i class="material-icons button delete">delete</i>', $url, $options) : '';
+                            },
+                            'redelete-productid' => function ($url, $modelProductId) {
+                                return $modelProductId->status_active == 0 ? Html::a('
+                                    <i class="material-icons button redelete">undo</i>', $url, [ 'title' => Yii::t('app', 'Восстановить') ]) : '';
                             },
                         ],
-
                     ],
 
                 ],

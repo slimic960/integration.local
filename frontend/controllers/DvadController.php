@@ -14,6 +14,9 @@ use common\models\MappingOfferProductIdDvad;
 use common\models\MappingProductIdDvad;
 use common\models\MappingStatusesDvad;
 use common\models\MappingCountryIdDvadSearch;
+use common\models\MappingDeliveryServiceDvadSearch;
+use common\models\MappingOfferProductIdDvadSearch;
+use common\models\MappingProductIdDvadSearch;
 
 
 class DvadController extends Controller
@@ -39,26 +42,21 @@ class DvadController extends Controller
      */
     public function actionIndex()
     {
-        $dataProviderService = new ActiveDataProvider([
-            'query' => MappingDeliveryServiceDvad::find(),
-        ]);
+
+        $searchModelCountry = new MappingCountryIdDvadSearch();
+        $dataProviderCountry = $searchModelCountry->search(Yii::$app->request->queryParams);
+
+        $searchModelService = new MappingDeliveryServiceDvadSearch();
+        $dataProviderService = $searchModelService->search(Yii::$app->request->queryParams);
+
+        $searchModelOfferId = new MappingOfferProductIdDvadSearch();
+        $dataProviderOfferId = $searchModelOfferId->search(Yii::$app->request->queryParams);
+
+        $searchModelProductId = new MappingProductIdDvadSearch();
+        $dataProviderProductId = $searchModelProductId->search(Yii::$app->request->queryParams);
 
 
-        $dataProviderOfferId = new ActiveDataProvider([
-            'query' => MappingOfferProductIdDvad::find(),
-        ]);
-
-        $dataProviderProductId = new ActiveDataProvider([
-            'query' => MappingProductIdDvad::find(),
-            'pagination' => [
-                'pageSize' => 15,
-            ],
-        ]);
-
-        $searchModel = new MappingCountryIdDvadSearch();
-        $dataProviderCountry = $searchModel->search(Yii::$app->request->queryParams);
-
-            if (Yii::$app->user->isGuest) {
+        if (Yii::$app->user->isGuest) {
                 return $this->goHome();
             }
             $id = \Yii::$app->request->get('id');
@@ -129,11 +127,6 @@ class DvadController extends Controller
 
             return  $this->render('index', compact(
                 'callcenter',
-                'country_dvad',
-                'service_dvad',
-                'offer_dvad',
-                'product_dvad',
-                'status_dvad',
                 'country_count_dvad',
                 'service_count_dvad',
                 'product_count_dvad',
@@ -146,7 +139,10 @@ class DvadController extends Controller
                 'dataProviderService',
                 'dataProviderOfferId',
                 'dataProviderProductId',
-                'searchModel'
+                'searchModelCountry',
+                'searchModelService',
+                'searchModelOfferId',
+                'searchModelProductId'
             ));
     }
 
@@ -211,12 +207,70 @@ class DvadController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
+    public function actionDeleteCountry($id)
     {
-        $this->findModelService($id)->delete();
-
+        Yii::$app->db->createCommand()
+            ->update('callcenter_dvad.mapping_country_id', ['status_active' => 0], ['id' => $id])
+            ->execute();
         return $this->redirect(['index']);
     }
+
+    public function actionRedeleteCountry($id)
+    {
+        Yii::$app->db->createCommand()
+            ->update('callcenter_dvad.mapping_country_id', ['status_active' => 1], ['id' => $id])
+            ->execute();
+        return $this->redirect(['index']);
+    }
+
+    public function actionDeleteService($id)
+    {
+        Yii::$app->db->createCommand()
+            ->update('callcenter_dvad.mapping_delivery_service', ['status_active' => 0], ['id' => $id])
+            ->execute();
+        return $this->redirect(['index']);
+    }
+
+    public function actionRedeleteService($id)
+    {
+        Yii::$app->db->createCommand()
+            ->update('callcenter_dvad.mapping_delivery_service', ['status_active' => 1], ['id' => $id])
+            ->execute();
+        return $this->redirect(['index']);
+    }
+
+    public function actionDeleteOfferid($id)
+    {
+        Yii::$app->db->createCommand()
+            ->update('callcenter_dvad.mapping_offer_product_id', ['active' => 0], ['id' => $id])
+            ->execute();
+        return $this->redirect(['index']);
+    }
+
+    public function actionRedeleteOfferid($id)
+    {
+        Yii::$app->db->createCommand()
+            ->update('callcenter_dvad.mapping_offer_product_id', ['active' => 1], ['id' => $id])
+            ->execute();
+        return $this->redirect(['index']);
+    }
+
+    public function actionDeleteProductid($id)
+    {
+        Yii::$app->db->createCommand()
+            ->update('callcenter_dvad.mapping_product_id', ['status_active' => 0], ['id' => $id])
+            ->execute();
+        return $this->redirect(['index']);
+    }
+
+    public function actionRedeleteProductid($id)
+    {
+        Yii::$app->db->createCommand()
+            ->update('callcenter_dvad.mapping_product_id', ['status_active' => 1], ['id' => $id])
+            ->execute();
+        return $this->redirect(['index']);
+    }
+
 
     /**
      * Finds the MappingCountryIdDvad model based on its primary key value.

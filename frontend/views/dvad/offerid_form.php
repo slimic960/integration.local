@@ -19,7 +19,7 @@ use yii\widgets\ActiveForm;
         <?= $form->field($modelOfferId, 'active')->textInput(['maxlength' => true]) ?>
 
         <div class="form-group">
-            <?= Html::submitButton($modelOfferId->isNewRecord ? 'Create' : 'Update', ['class' => $modelOfferId->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+            <?= Html::submitButton($modelOfferId->isNewRecord ? 'Добавить' : 'Обновить', ['class' => $modelOfferId->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
         </div>
     <?php endif; ?>
     <?php ActiveForm::end(); ?>

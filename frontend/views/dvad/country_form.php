@@ -17,7 +17,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($modelCountry, 'sp_so_country')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">
-        <?= Html::submitButton($modelCountry->isNewRecord ? 'Создать' : 'Изменить', ['class' => $modelCountry->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($modelCountry->isNewRecord ? 'Добавить' : 'Обновить', ['class' => $modelCountry->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
     <?php endif; ?>
     <?php ActiveForm::end(); ?>
