@@ -6,11 +6,19 @@ use Yii;
 use frontend\models\Callcenter;
 use common\models\MappingCountryKazeco;
 use common\models\MappingCountryKazecoSearch;
+use common\models\MappingDeliveryServiceKazeco;
+use common\models\MappingDeliveryServiceKazecoSearch;
+use common\models\MappingOfferKazeco;
+use common\models\MappingOfferKazecoSearch;
+use common\models\MappingOfferProductKazeco;
+use common\models\MappingOfferProductKazecoSearch;
+use common\models\MappingStatusesKazeco;
+use common\models\MappingStatusesKazecoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
-class KazecoController extends \yii\web\Controller
+class KazecoController extends Controller
 {
     /**
      * @inheritdoc
@@ -39,17 +47,65 @@ class KazecoController extends \yii\web\Controller
 
         $searchModelCountry = new MappingCountryKazecoSearch();
         $dataProviderCountry = $searchModelCountry->search(Yii::$app->request->queryParams);
+        $dataProviderCountry->pagination->pageSize=15;
+
+        $searchModelService = new MappingDeliveryServiceKazecoSearch();
+        $dataProviderService = $searchModelService->search(Yii::$app->request->queryParams);
+        $dataProviderService->pagination->pageSize=15;
+
+
+        $searchModelOffer = new MappingOfferKazecoSearch();
+        $dataProviderOffer = $searchModelOffer->search(Yii::$app->request->queryParams);
+        $dataProviderOffer->pagination->pageSize=15;
+
+        $searchModelOfferProduct = new MappingOfferProductKazecoSearch();
+        $dataProviderOfferProduct = $searchModelOfferProduct->search(Yii::$app->request->queryParams);
+        $dataProviderOfferProduct->pagination->pageSize=15;
+
+        $searchModelStatuses = new MappingStatusesKazecoSearch();
+        $dataProviderStatuses = $searchModelStatuses->search(Yii::$app->request->queryParams);
+        $dataProviderStatuses->pagination->pageSize=15;
+
+
 
         $id = \Yii::$app->request->get('id');
         $callcenter = callcenter::findOne($id);
 
         $query  = mappingcountrykazeco::find();
-        $country_by = $query->orderBy('id')
+        $country_kazeco = $query->orderBy('id')
             ->limit(50)
             ->all();
-        $country_count_by = count($country_by);
+        $country_count_kazeco = count($country_kazeco);
+
+        $query  = mappingdeliveryservicekazeco::find();
+        $service_kazeco = $query->orderBy('id')
+            ->limit(50)
+            ->all();
+        $service_count_kazeco = count($service_kazeco);
+
+        $query  = mappingofferkazeco::find();
+        $offer_kazeco = $query->orderBy('id')
+            ->limit(50)
+            ->all();
+        $offer_count_kazeco = count($offer_kazeco);
+
+        $query  = mappingofferproductkazeco::find();
+        $offer_product_kazeco = $query->orderBy('id')
+            ->limit(50)
+            ->all();
+        $offer_product_count_kazeco = count($offer_product_kazeco);
+
+        $query  = mappingstatuseskazeco::find();
+        $statuses_kazeco = $query->orderBy('id')
+            ->limit(50)
+            ->all();
+        $statuses_count_kazeco = count($statuses_kazeco);
 
         $modelCountry = new MappingCountryKazeco();
+        $modelService = new MappingDeliveryServiceKazeco();
+        $modelOffer = new MappingOfferKazeco();
+        $modelOfferProduct = new MappingOfferProductKazeco();
+        $modelStatuses = new MappingStatusesKazeco();
 
         if($modelCountry->load(\Yii::$app->request->post()) && $modelCountry->validate()){
             if ($modelCountry->load(Yii::$app->request->post()) && $modelCountry->save()) {
@@ -59,12 +115,61 @@ class KazecoController extends \yii\web\Controller
             }
         }
 
+        if($modelService->load(\Yii::$app->request->post()) && $modelService->validate()){
+            if ($modelService->load(Yii::$app->request->post()) && $modelService->save()) {
+                return $this->redirect(['index']);
+            }else {
+                return $this->redirect(['index']);
+            }
+        }
+
+        if($modelOffer->load(\Yii::$app->request->post()) && $modelOffer->validate()){
+            if ($modelOffer->load(Yii::$app->request->post()) && $modelOffer->save()) {
+                return $this->redirect(['index']);
+            }else {
+                return $this->redirect(['index']);
+            }
+        }
+
+        if($modelOfferProduct->load(\Yii::$app->request->post()) && $modelOfferProduct->validate()){
+            if ($modelOfferProduct->load(Yii::$app->request->post()) && $modelOfferProduct->save()) {
+                return $this->redirect(['index']);
+            }else {
+                return $this->redirect(['index']);
+            }
+        }
+
+        if($modelStatuses->load(\Yii::$app->request->post()) && $modelStatuses->validate()){
+            if ($modelStatuses->load(Yii::$app->request->post()) && $modelStatuses->save()) {
+                return $this->redirect(['index']);
+            }else {
+                return $this->redirect(['index']);
+            }
+        }
+
+
         return  $this->render('index', compact(
             'callcenter',
-            'country_count_by',
+            'country_count_kazeco',
+            'service_count_kazeco',
+            'offer_count_kazeco',
+            'offer_product_count_kazeco',
+            'statuses_count_kazeco',
             'modelCountry',
+            'modelService',
+            'modelOffer',
+            'modelOfferProduct',
+            'modelStatuses',
             'dataProviderCountry',
-            'searchModelCountry'
+            'dataProviderService',
+            'dataProviderOffer',
+            'dataProviderOfferProduct',
+            'dataProviderStatuses',
+            'searchModelCountry',
+            'searchModelService',
+            'searchModelOffer',
+            'searchModelOfferProduct',
+            'searchModelStatuses'
         ));
     }
 
@@ -82,6 +187,54 @@ class KazecoController extends \yii\web\Controller
         } else {
             return $this->render('countryUpdate', [
                 'modelCountry' => $modelCountry,
+            ]);
+        }
+    }
+
+    public function actionServiceUpdate($id)
+    {
+        $modelService = $this->findModelService($id);
+        if ($modelService->load(Yii::$app->request->post()) && $modelService->save()) {
+            return $this->redirect(['index']);
+        } else {
+            return $this->render('serviceUpdate', [
+                'modelService' => $modelService,
+            ]);
+        }
+    }
+
+    public function actionOfferUpdate($id)
+    {
+        $modelOffer = $this->findModelOffer($id);
+        if ($modelOffer->load(Yii::$app->request->post()) && $modelOffer->save()) {
+            return $this->redirect(['index']);
+        } else {
+            return $this->render('offerUpdate', [
+                'modelOffer' => $modelOffer,
+            ]);
+        }
+    }
+
+    public function actionOfferProductUpdate($id)
+    {
+        $modelOfferProduct = $this->findModelOfferProduct($id);
+        if ($modelOfferProduct->load(Yii::$app->request->post()) && $modelOfferProduct->save()) {
+            return $this->redirect(['index']);
+        } else {
+            return $this->render('offerProductUpdate', [
+                'modelOfferProduct' => $modelOfferProduct,
+            ]);
+        }
+    }
+
+    public function actionStatusesUpdate($id)
+    {
+        $modelStatuses = $this->findModelStatuses($id);
+        if ($modelStatuses->load(Yii::$app->request->post()) && $modelStatuses->save()) {
+            return $this->redirect(['index']);
+        } else {
+            return $this->render('statusesUpdate', [
+                'modelStatuses' => $modelStatuses,
             ]);
         }
     }
@@ -108,6 +261,71 @@ class KazecoController extends \yii\web\Controller
         return $this->redirect(['index']);
     }
 
+    public function actionDeleteService($id)
+    {
+        Yii::$app->db->createCommand()
+            ->update('callcenter_kazeco.mapping_delivery_service', ['status_active' => 0], ['id' => $id])
+            ->execute();
+        return $this->redirect(['index']);
+    }
+
+    public function actionRedeleteService($id)
+    {
+        Yii::$app->db->createCommand()
+            ->update('callcenter_kazeco.mapping_delivery_service', ['status_active' => 1], ['id' => $id])
+            ->execute();
+        return $this->redirect(['index']);
+    }
+
+    public function actionDeleteOffer($id)
+    {
+        Yii::$app->db->createCommand()
+            ->update('callcenter_kazeco.mapping_offer', ['active' => 0], ['id' => $id])
+            ->execute();
+        return $this->redirect(['index']);
+    }
+
+    public function actionRedeleteOffer($id)
+    {
+        Yii::$app->db->createCommand()
+            ->update('callcenter_kazeco.mapping_offer', ['active' => 1], ['id' => $id])
+            ->execute();
+        return $this->redirect(['index']);
+    }
+
+    public function actionDeleteOfferProduct($id)
+    {
+        Yii::$app->db->createCommand()
+            ->update('callcenter_kazeco.mapping_offer_product', ['active' => 0], ['id' => $id])
+            ->execute();
+        return $this->redirect(['index']);
+    }
+
+    public function actionRedeleteOfferProduct($id)
+    {
+        Yii::$app->db->createCommand()
+            ->update('callcenter_kazeco.mapping_offer_product', ['active' => 1], ['id' => $id])
+            ->execute();
+        return $this->redirect(['index']);
+    }
+
+    public function actionDeleteStatuses($id)
+    {
+        Yii::$app->db->createCommand()
+            ->update('callcenter_kazeco.mapping_statuses', ['status_terminal' => 0], ['id' => $id])
+            ->execute();
+        return $this->redirect(['index']);
+    }
+
+    public function actionRedeleteStatuses($id)
+    {
+        Yii::$app->db->createCommand()
+            ->update('callcenter_kazeco.mapping_statuses', ['status_terminal' => 1], ['id' => $id])
+            ->execute();
+        return $this->redirect(['index']);
+    }
+
+
 
     /**
      * Finds the MappingCountryIdDvad model based on its primary key value.
@@ -125,6 +343,41 @@ class KazecoController extends \yii\web\Controller
         }
     }
 
+    protected function findModelService($id)
+    {
+        if (($modelService = MappingDeliveryServiceKazeco::findOne($id)) !== null) {
+            return $modelService;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    protected function findModelOffer($id)
+    {
+        if (($modelOffer = MappingOfferKazeco::findOne($id)) !== null) {
+            return $modelOffer;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    protected function findModelOfferProduct($id)
+    {
+        if (($modelOfferProduct = MappingOfferProductKazeco::findOne($id)) !== null) {
+            return $modelOfferProduct;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    protected function findModelStatuses($id)
+    {
+        if (($modelStatuses = MappingStatusesKazeco::findOne($id)) !== null) {
+            return $modelStatuses;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
 
 
 }

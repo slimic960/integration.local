@@ -250,6 +250,11 @@ tbody tr:hover {
     margin-left: 15px;
 }
 
+.navbar-header .material-icons{
+    color: white;
+    font-size: 45px;
+}
+
 .button {
     color: #aaa;
     cursor: pointer;
@@ -263,3 +268,24 @@ tbody tr:hover {
 .table-striped > tbody > tr{
     background: white;
 }
+
+.select_status{
+    width: 20px;
+    margin-left: 30%;
+    margin-top: 11%;
+    min-width: 20px !important;
+}
+
+.panel-default:hover{
+    border-color: rgba(76, 234, 245, 0.5);
+}
+
+.logo{
+    margin: 0;
+    font: 900 144px/1 'Raleway', serif;
+    letter-spacing: -.065em;
+    position: relative;
+    color: #008ccb;
+    display: inline-block;
+}
+
