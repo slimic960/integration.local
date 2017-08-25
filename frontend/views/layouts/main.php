@@ -29,7 +29,7 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => Html::a(' <span class="logo"></span><i class="material-icons">wc</i>',['site/index'] , [ 'title' => Yii::t('app', 'Интегрируйтесь...') ]),
+        'brandLabel' => Html::a(' <span class="logo"></span><i class="material-icons">wc</i>',['site/index'] , [ 'title' => Yii::t('app', 'Интегрируйтесь') ]),
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-integ navbar-fixed-top',
