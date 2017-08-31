@@ -9,6 +9,7 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use common\widgets\Alert;
+use common\models\User;
 
 AppAsset::register($this);
 ?>
@@ -29,15 +30,17 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => Html::a(' <span class="logo"></span><i class="material-icons">wc</i>',['site/index'] , [ 'title' => Yii::t('app', 'Интегрируйтесь') ]),
+        'brandLabel' => Html::a(' <span class="logo"></span><i class="material-icons">wc</i>',['site/index'] , [ 'title' => Yii::t('app', 'Интеграция') ]),
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-integ navbar-fixed-top',
         ],
     ]);
-    $menuItems = [
-        ['label' => 'Меню', 'url' => ['/site/menu']],
-    ];
+    if (Yii::$app->user->can('admin')) {
+    $menuItems[] = '<li>'
+        . Html::a('Пользователи', Yii::$app->backendUrlManager->createUrl(['/index/', 'url' => $model->alias]))
+        . '</li>';
+    }
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Регистрация', 'url' => ['/site/signup']];
         $menuItems[] = ['label' => 'Войти', 'url' => ['/site/login']];

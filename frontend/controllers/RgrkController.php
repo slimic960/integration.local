@@ -7,6 +7,7 @@ use frontend\models\Callcenter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 use common\models\MappingStatusesRgrk;
 use common\models\MappingStatusesRgrkSearch;
 use common\models\MappingCountryRgrk;
@@ -18,6 +19,15 @@ class RgrkController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['admin','userRgrk'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [

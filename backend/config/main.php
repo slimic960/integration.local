@@ -11,7 +11,15 @@ return [
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
-    'modules' => [],
+    'modules' => [
+        'permit' => [
+            'class' => 'developeruz\db_rbac\Yii2DbRbac',
+             'params' => [
+                'userClass' => 'common\models\User',
+                'accessRoles' => ['admin']
+             ]
+        ],
+    ],
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-backend',
@@ -45,6 +53,12 @@ return [
             ],
         ],
         */
+        'frontendUrlManager' => [
+            'class' => 'yii\web\urlManager',
+            'baseUrl' => 'http://integration.local',
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+        ],
     ],
     'params' => $params,
 ];

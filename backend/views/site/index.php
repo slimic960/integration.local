@@ -1,53 +1,67 @@
 <?php
-
+use yii\helpers\Html;
+use yii\helpers\Url;
+use nirvana\showloading\ShowLoadingAsset;
+use yii\grid\GridView;
+ShowLoadingAsset::register($this);
 /* @var $this yii\web\View */
-
-$this->title = 'My Yii Application';
+$this->registerJsFile('/js/site.js',
+    ['depends' => [\yii\web\JqueryAsset::className()]]
+);
+$this->title = 'Интеграция';
 ?>
 <div class="site-index">
-
-    <div class="jumbotron">
-        <h1>Congratulations!</h1>
-
-        <p class="lead">You have successfully created your Yii-powered application.</p>
-
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
+    <br>
+    <div class="row">
+            <div class="col-sm-6 col-md-6">
+                <a href="<?= yii\helpers\Url::to(['/permit/access/role'])?>">
+                    <div class="thumbnail color-block">
+                        <div class="caption">
+                            <h3>Роли</h3>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-sm-6 col-md-6">
+                <a href="<?= yii\helpers\Url::to(['/permit/access/permission'])?>">
+                    <div class="thumbnail color-block">
+                        <div class="caption">
+                            <h3>Правила доступа</h3>
+                        </div>
+                    </div>
+                </a>
+            </div>
     </div>
+    <div class="panel panel-default">
+        <ul class="list-group">
+            <li class="list-group-item">
+                Пользователи
+            </li>
+        </ul>
+        <div class="panel-footer">
+        <?= GridView::widget([
+            'dataProvider' => $dataProvider,
+            'summary'=>'',
+            'columns' => [
+                ['class' => 'yii\grid\SerialColumn'],
 
-    <div class="body-content">
+                'username',
+                'email:email',
 
-        <div class="row">
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
-            </div>
+                ['class' => 'yii\grid\ActionColumn',
+                    'template' => '{permit}',
+                    'headerOptions' => ['width' => '30'],
+                    'buttons' =>
+                        [
+                            'permit' => function ($url, $model) {
+                                return Html::a('<i class="material-icons button redelete">build</i>', Url::to(['/permit/user/view', 'id' => $model->id]), [
+                                    'title' => Yii::t('yii', 'Изменить роль пользователя')
+                                ]); },
+                        ]
+                ],
+            ],
+        ]);
+        ?>
         </div>
 
-    </div>
 </div>

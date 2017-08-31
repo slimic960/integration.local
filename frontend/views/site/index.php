@@ -4,7 +4,6 @@ use yii\widgets\LinkPager;
 use nirvana\showloading\ShowLoadingAsset;
 ShowLoadingAsset::register($this);
 /* @var $this yii\web\View */
-
 $this->title = 'Интеграция';
 //$this->registerLinkTag(['rel' => 'icon', 'type' => 'image/png', 'href' => Url::to(['/favicon.png'])]);
 $this->registerJsFile('/js/site.js',
@@ -22,11 +21,10 @@ $this->registerJsFile('/js/site.js',
                                  <h3><?= Html::encode("{$v->callcenter_name}") ?></h3>
                              </div>
                          </div>
-            </a>
+                    </a>
                 </div>
             <?php endforeach; ?>
         <?= LinkPager::widget(['pagination' => $pagination]) ?>
     </div>
-
 </div>
 </div>

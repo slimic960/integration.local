@@ -1,17 +1,20 @@
 <?php
 namespace frontend\controllers;
 
+use common\models\MenuSearch;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
+use yii\web\NotFoundHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
+use common\models\Menu;
+use common\models\AuthAssignment;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
-use frontend\models\MenuForm;
 use frontend\models\Callcenter;
 use yii\data\Pagination;
 
@@ -28,8 +31,13 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout', 'signup'],
+                'only' => ['logout', 'signup', 'index'],
                 'rules' => [
+                    [
+                        'actions' => ['index'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
                     [
                         'actions' => ['signup'],
                         'allow' => true,
@@ -74,6 +82,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+
         $query  = callcenter::find();
 
         $pagination = new Pagination([
@@ -133,21 +142,77 @@ class SiteController extends Controller
      */
     public function actionMenu()
     {
-        $model = new MenuForm();
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            if ($model->sendEmail(Yii::$app->params['adminEmail'])) {
-                Yii::$app->session->setFlash('success', 'Thank you for contacting us. We will respond to you as soon as possible.');
-            } else {
-                Yii::$app->session->setFlash('error', 'There was an error sending your message.');
-            }
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
 
-            return $this->refresh();
+        $searchModelMenu = new MenuSearch();
+        $dataProviderMenu = $searchModelMenu->search(Yii::$app->request->queryParams);
+        $dataProviderMenu->pagination->pageSize=15;
+        $modelMenu = new Menu();
+
+        return  $this->render('menu', compact(
+            'searchModelMenu',
+            'dataProviderMenu',
+            'modelMenu',
+            'modelMenuAuth'
+        ));
+    }
+
+    public function actionMenuUpdate($id)
+    {
+        $modelMenu = $this->findModelMenu($id);
+
+        if ($modelMenu->load(Yii::$app->request->post()) && $modelMenu->save()) {
+//        $userRole = Yii::$app->authManager->getRole('admin');
+//        Yii::$app->authManager->assign($userRole, $id);
+            return $this->redirect(['index']);
         } else {
-            return $this->render('menu', [
-                'model' => $model,
+            return $this->render('menuUpdate', [
+                'modelMenu' => $modelMenu,
             ]);
         }
     }
+
+
+    public function actionAuthUpdate($id)
+    {
+        $modelMenuAuth = $this->findModelMenuAuth($id);
+        foreach ($modelMenuAuth as $k=>$t) {
+            if ($t->save()) {
+//        $userRole = Yii::$app->authManager->getRole('admin');
+//        Yii::$app->authManager->assign($userRole, $id);
+                return $this->redirect(['menu']);
+            } else {
+                return $this->render('authUpdate', [
+                    'modelMenuAuth' => $modelMenuAuth,
+                ]);
+            }
+        }
+    }
+
+
+    protected function findModelMenu($id)
+    {
+        if (($modelMenu = Menu::findOne($id)) !== null) {
+            return $modelMenu;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    protected function findModelMenuAuth($id)
+    {
+        if (($modelMenuAuth = AuthAssignment::findAll([
+                'user_id' => $id,
+            ])) !== null) {
+            return $modelMenuAuth;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+
 
     /**
      * Signs user up.
@@ -217,6 +282,37 @@ class SiteController extends Controller
         return $this->render('resetPassword', [
             'model' => $model,
         ]);
+    }
+
+    public function actionRole($id){
+//        $admin = Yii::$app->authManager->createRole('admin');
+//        $admin->description = 'Администратор';
+//        Yii::$app->authManager->add($admin);
+//
+//        $content = Yii::$app->authManager->createRole('content');
+//        $content->description = 'content';
+//        Yii::$app->authManager->add($content);
+//
+//        $user = Yii::$app->authManager->createRole('userKazeco');
+//        $user->description = 'UserKazeco';
+//        Yii::$app->authManager->add($user);
+//
+//        $ban = Yii::$app->authManager->createRole('ban');
+//        $ban->description = 'ban';
+//        Yii::$app->authManager->add($ban);
+//
+//        $permit = Yii::$app->authManager->createPermission('viewIndexKazeco');
+//        $permit->description = 'Право на просмотр Kazeco';
+//        Yii::$app->authManager->add($permit);
+//
+//        $role_a = Yii::$app->authManager->getRole('userKazeco');
+//        $permit = Yii::$app->authManager->getPermission('viewIndexKazeco');
+//        Yii::$app->authManager->addChild($role_a, $permit);
+
+//        $userRole = Yii::$app->authManager->getRole('userKazeco');
+//        Yii::$app->authManager->assign($userRole, Yii::$app->user->getId());
+
+        return 123;
     }
 }
 

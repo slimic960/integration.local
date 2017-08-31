@@ -40,9 +40,14 @@ return [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-            'rules' => [
-            ],
         ],
+        'backendUrlManager' => [
+            'class' => 'yii\web\urlManager',
+            'baseUrl' => 'http://integration.local/backend/web/index.php',
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+        ],
+
 
     ],
     'params' => $params,
