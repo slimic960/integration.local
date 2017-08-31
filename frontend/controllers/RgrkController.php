@@ -49,15 +49,15 @@ class RgrkController extends Controller
 
         $searchModelCountry = new MappingCountryRgrkSearch();
         $dataProviderCountry = $searchModelCountry->search(Yii::$app->request->queryParams);
-        $dataProviderCountry->pagination->pageSize=15;
+        $dataProviderCountry->pagination->pageSize=150;
 
         $searchModelOfferProduct = new MappingOfferProductRgrkSearch();
         $dataProviderOfferProduct = $searchModelOfferProduct->search(Yii::$app->request->queryParams);
-        $dataProviderOfferProduct->pagination->pageSize=15;
+        $dataProviderOfferProduct->pagination->pageSize=150;
 
         $searchModelStatuses = new MappingStatusesRgrkSearch();
         $dataProviderStatuses = $searchModelStatuses->search(Yii::$app->request->queryParams);
-        $dataProviderStatuses->pagination->pageSize=15;
+        $dataProviderStatuses->pagination->pageSize=150;
 
 
         $id = \Yii::$app->request->get('id');

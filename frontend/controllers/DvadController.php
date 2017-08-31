@@ -53,19 +53,19 @@ class DvadController extends Controller
 
         $searchModelCountry = new MappingCountryIdDvadSearch();
         $dataProviderCountry = $searchModelCountry->search(Yii::$app->request->queryParams);
-        $dataProviderCountry->pagination->pageSize=15;
+        $dataProviderCountry->pagination->pageSize=150;
 
         $searchModelService = new MappingDeliveryServiceDvadSearch();
         $dataProviderService = $searchModelService->search(Yii::$app->request->queryParams);
-        $dataProviderService->pagination->pageSize=15;
+        $dataProviderService->pagination->pageSize=150;
 
         $searchModelOfferId = new MappingOfferProductIdDvadSearch();
         $dataProviderOfferId = $searchModelOfferId->search(Yii::$app->request->queryParams);
-        $dataProviderOfferId->pagination->pageSize=15;
+        $dataProviderOfferId->pagination->pageSize=150;
 
         $searchModelProductId = new MappingProductIdDvadSearch();
         $dataProviderProductId = $searchModelProductId->search(Yii::$app->request->queryParams);
-        $dataProviderProductId->pagination->pageSize=15;
+        $dataProviderProductId->pagination->pageSize=150;
 
 
         if (Yii::$app->user->isGuest) {

@@ -57,24 +57,24 @@ class KazecoController extends Controller
 
         $searchModelCountry = new MappingCountryKazecoSearch();
         $dataProviderCountry = $searchModelCountry->search(Yii::$app->request->queryParams);
-        $dataProviderCountry->pagination->pageSize=15;
+        $dataProviderCountry->pagination->pageSize=150;
 
         $searchModelService = new MappingDeliveryServiceKazecoSearch();
         $dataProviderService = $searchModelService->search(Yii::$app->request->queryParams);
-        $dataProviderService->pagination->pageSize=15;
+        $dataProviderService->pagination->pageSize=150;
 
 
         $searchModelOffer = new MappingOfferKazecoSearch();
         $dataProviderOffer = $searchModelOffer->search(Yii::$app->request->queryParams);
-        $dataProviderOffer->pagination->pageSize=15;
+        $dataProviderOffer->pagination->pageSize=150;
 
         $searchModelOfferProduct = new MappingOfferProductKazecoSearch();
         $dataProviderOfferProduct = $searchModelOfferProduct->search(Yii::$app->request->queryParams);
-        $dataProviderOfferProduct->pagination->pageSize=15;
+        $dataProviderOfferProduct->pagination->pageSize=150;
 
         $searchModelStatuses = new MappingStatusesKazecoSearch();
         $dataProviderStatuses = $searchModelStatuses->search(Yii::$app->request->queryParams);
-        $dataProviderStatuses->pagination->pageSize=15;
+        $dataProviderStatuses->pagination->pageSize=150;
 
 
 

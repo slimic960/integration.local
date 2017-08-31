@@ -55,11 +55,11 @@ class ByController extends Controller
 
         $searchModelOffer = new MappingOffersBYSearch();
         $dataProviderOffer = $searchModelOffer->search(Yii::$app->request->queryParams);
-        $dataProviderOffer->pagination->pageSize=15;
+        $dataProviderOffer->pagination->pageSize=150;
 
         $searchModelStatuses = new MappingStatusesBYSearch();
         $dataProviderStatuses = $searchModelStatuses->search(Yii::$app->request->queryParams);
-        $dataProviderStatuses->pagination->pageSize=15;
+        $dataProviderStatuses->pagination->pageSize=150;
 
         $id = \Yii::$app->request->get('id');
         $callcenter = callcenter::findOne($id);

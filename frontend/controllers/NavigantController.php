@@ -48,7 +48,7 @@ class NavigantController extends Controller
 
         $searchModelOffer = new MappingOfferNavigantSearch();
         $dataProviderOffer = $searchModelOffer->search(Yii::$app->request->queryParams);
-        $dataProviderOffer->pagination->pageSize=15;
+        $dataProviderOffer->pagination->pageSize=150;
 
         $id = \Yii::$app->request->get('id');
         $callcenter = callcenter::findOne($id);
