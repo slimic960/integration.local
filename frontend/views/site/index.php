@@ -5,7 +5,6 @@ use nirvana\showloading\ShowLoadingAsset;
 ShowLoadingAsset::register($this);
 /* @var $this yii\web\View */
 $this->title = 'Интеграция';
-//$this->registerLinkTag(['rel' => 'icon', 'type' => 'image/png', 'href' => Url::to(['/favicon.png'])]);
 $this->registerJsFile('/js/site.js',
     ['depends' => [\yii\web\JqueryAsset::className()]]
 );
