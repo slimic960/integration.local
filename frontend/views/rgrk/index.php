@@ -66,7 +66,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'status_active',
                 'format' => 'raw',
                 'filter' => [
-                    ''=> 'Показать всё',
                     0 => 'Удалена',
                     1 => 'Активна',
                 ],
@@ -164,7 +163,6 @@ $this->params['breadcrumbs'][] = $this->title;
                         'attribute' => 'status_active',
                         'format' => 'raw',
                         'filter' => [
-                            ''=> 'Показать всё',
                             0 => 'Удалена',
                             1 => 'Активна',
                         ],
@@ -185,7 +183,6 @@ $this->params['breadcrumbs'][] = $this->title;
                         'attribute' => 'gift',
                         'format' => 'raw',
                         'filter' => [
-                            ''=> 'Показать всё',
                             0 => 'Продукт',
                             1 => 'Подарок',
                         ],
@@ -195,9 +192,9 @@ $this->params['breadcrumbs'][] = $this->title;
                             $active = $model->{$column->attribute} == 1;
                             return \yii\helpers\Html::tag(
                                 'span',
-                                $active ? 'card_giftcard' : '',
+                                $active ? 'Подарок' : '',
                                 [
-                                    'class' => 'material-icons ' . ($active ? 'success' : 'danger'),
+                                    'class' => 'label label-' . ($active ? 'success' : 'danger'),
                                 ]
                             );
                         },
@@ -282,7 +279,6 @@ $this->params['breadcrumbs'][] = $this->title;
                         'attribute' => 'status_terminal',
                         'format' => 'raw',
                         'filter' => [
-                            ''=> 'Показать всё',
                             0 => 'Удалена',
                             1 => 'Активна',
                         ],

@@ -56,6 +56,13 @@ class User extends ActiveRecord implements IdentityInterface, UserRbacInterface
         ];
     }
 
+    public function attributeLabels()
+    {
+        return [
+            'username' => 'Имя пользователя',
+        ];
+    }
+
     public function getUserName()
     {
         return $this->username;

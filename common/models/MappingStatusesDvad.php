@@ -49,7 +49,7 @@ class MappingStatusesDvad extends \yii\db\ActiveRecord
             'sostatus' => 'Sostatus',
             'dvad_status' => 'Dvad Status',
             'dvad_status_name' => 'Dvad Status Name',
-            'status_terminal' => 'Status Terminal',
+            'status_terminal' => 'Статус',
         ];
     }
 }

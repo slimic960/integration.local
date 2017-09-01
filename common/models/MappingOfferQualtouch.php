@@ -51,7 +51,7 @@ class MappingOfferQualtouch extends \yii\db\ActiveRecord
             'id' => 'ID',
             'sp_offer' => 'Sp Offer',
             'qualtouch_offer' => 'Qualtouch Offer',
-            'active' => 'Active',
+            'active' => 'Статус',
         ];
     }
 }

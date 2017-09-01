@@ -111,6 +111,7 @@ var randomizeColor = function () {
     })
 };
 
+
 randomizeColor();
 var t = setInterval(randomizeColor, 20000);
 

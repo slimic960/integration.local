@@ -52,7 +52,7 @@ class MappingOffersBY extends \yii\db\ActiveRecord
             'sp_offer' => 'Sp Offer',
             'by_offer' => 'By Offer',
             'productid' => 'Productid',
-            'active' => 'Active',
+            'active' => 'Статус',
         ];
     }
 }

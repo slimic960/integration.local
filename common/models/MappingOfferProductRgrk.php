@@ -57,7 +57,7 @@ class MappingOfferProductRgrk extends \yii\db\ActiveRecord
             'productid' => 'Productid',
             'gift' => 'Подарок',
             'product_name' => 'Product Name',
-            'status_active' => 'Status',
+            'status_active' => 'Статус',
         ];
     }
 }

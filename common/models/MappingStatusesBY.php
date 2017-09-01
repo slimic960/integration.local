@@ -52,7 +52,7 @@ class MappingStatusesBY extends \yii\db\ActiveRecord
             'sostatus' => 'Sostatus',
             'status' => 'Status',
             'status_name' => 'Status Name',
-            'status_terminal' => 'Status Terminal',
+            'status_terminal' => 'Статус',
         ];
     }
 }

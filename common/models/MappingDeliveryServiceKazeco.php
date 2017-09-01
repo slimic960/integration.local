@@ -51,6 +51,7 @@ class MappingDeliveryServiceKazeco extends \yii\db\ActiveRecord
             'sp_delivery_service' => 'Sp Delivery Service',
             'kz_delivery' => 'Kz Delivery',
             'kz_delivery_name' => 'Kz Delivery Name',
+            'status_active' => 'Статус'
         ];
     }
 }

@@ -9,7 +9,6 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use common\widgets\Alert;
-use common\models\User;
 
 AppAsset::register($this);
 ?>
@@ -37,19 +36,20 @@ AppAsset::register($this);
         ],
     ]);
     if (Yii::$app->user->can('admin')) {
-    $menuItems[] = '<li>'
-        . Html::a('Пользователи', Yii::$app->backendUrlManager->createUrl(['/index/', 'url' => $model->alias]))
+    $menuItems[] = '<li class="admin-li">'
+        . Html::a('<i class="material-icons admin-icons">settings</i>', Yii::$app->backendUrlManager->createUrl(['/index/', 'url' => $model->alias]),
+            ['title' => Yii::t('app', 'Админ-панель')])
         . '</li>';
     }
     if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Регистрация', 'url' => ['/site/signup']];
-        $menuItems[] = ['label' => 'Войти', 'url' => ['/site/login']];
+        $menuItems[] = ['label' => 'Регистрация', 'url' => ['/site/signup'] ];
+        $menuItems[] = ['label' => 'Авторизация', 'url' => ['/site/login']];
     } else {
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(
-                'Выйти (' . Yii::$app->user->identity->username . ')',
-                ['class' => 'btn btn-link logout', ]
+                'exit_to_app',
+                ['class' => 'btn btn-link logout material-icons admin-icons',  'title' => Yii::t('app', 'Выйти (' . Yii::$app->user->identity->username . ')')]
             )
             . Html::endForm()
             . '</li>';
@@ -70,6 +70,8 @@ AppAsset::register($this);
     </div>
 </div>
 
+<!--кнопка вверх-->
+<?= common\widgets\ScrollupWidget::widget() ?>
 <?php $this->endBody() ?>
 </body>
 </html>

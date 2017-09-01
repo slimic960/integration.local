@@ -51,7 +51,7 @@ class MappingOfferNavigant extends \yii\db\ActiveRecord
             'id' => 'ID',
             'sp_offer' => 'Sp Offer',
             'navigant_offer' => 'Navigant Offer',
-            'active' => 'Active',
+            'active' => 'Статус',
         ];
     }
 }

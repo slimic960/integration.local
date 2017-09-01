@@ -53,6 +53,7 @@ class MappingCountryKazeco extends \yii\db\ActiveRecord
             'country_kazeco' => 'Country Kazeco',
             'sp_so_country' => 'Sp So Country',
             'currency_id' => 'Currency ID',
+            'status_active' => 'Статус'
         ];
     }
 }

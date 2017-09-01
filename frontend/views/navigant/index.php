@@ -64,7 +64,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'active',
                 'format' => 'raw',
                 'filter' => [
-                    ''=> 'Показать всё',
                     0 => 'Удалена',
                     1 => 'Активна',
                 ],

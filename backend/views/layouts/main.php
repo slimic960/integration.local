@@ -36,16 +36,17 @@ AppAsset::register($this);
         ],
     ]);
     $menuItems[] = '<li>'
-        . Html::a('Главная', Yii::$app->frontendUrlManager->createUrl(['/index/', 'url' => $model->alias]))
+        . Html::a('<i class="material-icons admin-icons">home</i>', Yii::$app->frontendUrlManager->createUrl(['/index/', 'url' => $model->alias]),
+            ['title' => Yii::t('app', 'Главная')])
         . '</li>';
     if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Войти', 'url' => ['/site/login']];
+//        $menuItems[] = ['label' => 'Авторизация', 'url' => ['/site/login']];
     } else {
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(
-                'Выйти (' . Yii::$app->user->identity->username . ')',
-                ['class' => 'btn btn-link logout']
+                'exit_to_app',
+                ['class' => 'btn btn-link logout material-icons admin-icons',  'title' => Yii::t('app', 'Выйти (' . Yii::$app->user->identity->username . ')')]
             )
             . Html::endForm()
             . '</li>';

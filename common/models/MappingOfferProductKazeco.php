@@ -58,7 +58,7 @@ class MappingOfferProductKazeco extends \yii\db\ActiveRecord
             'product_kazeco' => 'Product Kazeco',
             'sp_offer' => 'Sp Offer',
             'gift' => 'Подарок',
-            'active' => 'Active',
+            'active' => 'Статус',
         ];
     }
 }
