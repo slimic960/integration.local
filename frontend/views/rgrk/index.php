@@ -194,7 +194,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'span',
                                 $active ? 'Подарок' : '',
                                 [
-                                    'class' => 'label label-' . ($active ? 'success' : 'danger'),
+                                    'class' => 'label label-' . ($active ? 'info' : 'danger'),
                                 ]
                             );
                         },
@@ -209,6 +209,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                 $options = [
                                     'title' => Yii::t('yii', 'Изменить'),
                                     'aria-label' => Yii::t('yii', 'Изменить'),
+                                    'data-confirm' => Yii::t('yii', 'Вы уверены что хотите удалить?'),
+                                    'data-pjax' => true,
                                 ];
                                 return Html::a(
                                     '<i class="material-icons button edit">edit</i>',
@@ -220,7 +222,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'aria-label' => Yii::t('yii', 'Удалить'),
                                     'data-confirm' => Yii::t('yii', 'Вы уверены что хотите удалить?'),
                                     'data-method' => 'post',
-                                    'data-pjax' => '0',
+                                    'data-pjax' => true,
                                 ];
                                 return $modelOfferProduct->status_active == 1 ? Html::a('
                                     <i class="material-icons button delete">delete</i>', $url, $options) : '';

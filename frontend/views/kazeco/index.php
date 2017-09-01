@@ -385,7 +385,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'span',
                                 $active ? 'Подарок' : '',
                                 [
-                                    'class' => 'label label-' . ($active ? 'success' : 'danger'),
+                                    'class' => 'label label-' . ($active ? 'info' : 'danger'),
                                 ]
                             );
                         },

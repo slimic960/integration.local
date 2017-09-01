@@ -60,6 +60,7 @@ class MappingCountryRgrkSearch extends MappingCountryRgrk
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'status_active' => $this->status_active,
         ]);
 
         $query->andFilterWhere(['like', 'sp_country', $this->sp_country])

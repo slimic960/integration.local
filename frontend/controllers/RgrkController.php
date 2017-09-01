@@ -194,10 +194,13 @@ class RgrkController extends Controller
 
     public function actionDeleteOfferProduct($id)
     {
+        if(Yii::$app->request->isPjax){
         Yii::$app->db->createCommand()
             ->update('callcenter_rgrk.mapping_offer_product', ['status_active' => 0], ['id' => $id])
             ->execute();
-        return $this->redirect(['index']);
+        return $this->render(['index']);
+        }
+        return $this->render(['index']);
     }
 
     public function actionRedeleteOfferProduct($id)

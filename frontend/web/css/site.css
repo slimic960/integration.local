@@ -365,3 +365,16 @@ tbody tr:hover {
         padding-bottom: 10px;
     }
 }
+
+@media (max-width: 900px){
+    .scrollup{
+        display: none !important;
+    }
+}
+
+@media (max-width: 1550px){
+    .scrollup{
+        left: 10px !important;
+        bottom: 10px !important;
+    }
+}
