@@ -282,10 +282,36 @@ tbody tr:hover {
 }
 
 .select_status{
+    position: relative;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    appearance: none;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    display: inline-block;
+    vertical-align: middle;
+    height: 3.4em;
+    padding: 0.2em 0.7em;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 0.3em;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 0.7em;
+    font-weight: normal;
+    overflow: hidden;
+    -webkit-transition: box-shadow 200ms, border-color 200ms;
+    -moz-transition: box-shadow 200ms, border-color 200ms;
+    transition: box-shadow 200ms, border-color 200ms;
+    white-space: nowrap;
     width: 20px;
-    margin-left: 30%;
-    margin-top: 11%;
-    min-width: 20px !important;
+    cursor: pointer;
+    min-width: 55px !important;
+}
+
+.select_status:hover{
+    border-color: rgba(76, 234, 245, 0.5);
 }
 
 .panel-default:hover{
