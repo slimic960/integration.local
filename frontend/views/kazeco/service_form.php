@@ -13,14 +13,14 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
     <?php if($modelService): ?>
 
-        <?= $form->field($modelService, 'sp_delivery_service')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($modelService, 'sp_delivery_service')->textInput(['maxlength' => '45']) ?>
 
-        <?= $form->field($modelService, 'kz_delivery')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($modelService, 'kz_delivery')->textInput(['maxlength' => '45']) ?>
 
-        <?= $form->field($modelService, 'kz_delivery_name')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($modelService, 'kz_delivery_name')->textInput(['maxlength' => '45']) ?>
 
         <div class="form-group">
-            <?= Html::submitButton($modelService->isNewRecord ? 'Добавить' : 'Обновить', ['class' => $modelService->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+            <?= Html::submitButton($modelService->isNewRecord ? 'Добавить' : 'Обновить', ['class' => $modelService->isNewRecord ? 'btn btn-success' : 'btn btn-primary',            'data-loading-text' => 'Подождите...', 'autocomplete'=>"off"]) ?>
         </div>
     <?php endif; ?>
     <?php ActiveForm::end(); ?>

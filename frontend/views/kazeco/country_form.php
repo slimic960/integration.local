@@ -13,16 +13,16 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
     <?php if($modelCountry): ?>
 
-        <?= $form->field($modelCountry, 'sp_country')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($modelCountry, 'sp_country')->textInput(['maxlength' => '45']) ?>
 
-        <?= $form->field($modelCountry, 'country_kazeco')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($modelCountry, 'country_kazeco')->textInput(['maxlength' => '45']) ?>
 
-        <?= $form->field($modelCountry, 'sp_so_country')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($modelCountry, 'sp_so_country')->textInput(['maxlength' => '45']) ?>
 
-        <?= $form->field($modelCountry, 'currency_id')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($modelCountry, 'currency_id')->textInput(['maxlength' => '45']) ?>
 
     <div class="form-group">
-        <?= Html::submitButton($modelCountry->isNewRecord ? 'Добавить' : 'Обновить', ['class' => $modelCountry->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($modelCountry->isNewRecord ? 'Добавить' : 'Обновить', ['class' => $modelCountry->isNewRecord ? 'btn btn-success' : 'btn btn-primary',            'data-loading-text' => 'Подождите...', 'autocomplete'=>"off"]) ?>
     </div>
     <?php endif; ?>
     <?php ActiveForm::end(); ?>

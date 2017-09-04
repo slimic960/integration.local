@@ -209,8 +209,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                 $options = [
                                     'title' => Yii::t('yii', 'Изменить'),
                                     'aria-label' => Yii::t('yii', 'Изменить'),
-                                    'data-confirm' => Yii::t('yii', 'Вы уверены что хотите удалить?'),
-                                    'data-pjax' => true,
                                 ];
                                 return Html::a(
                                     '<i class="material-icons button edit">edit</i>',

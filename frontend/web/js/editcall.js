@@ -20,9 +20,18 @@ $(document).ready(function() {
             });
         });
 
-    $('.edit, .breadcrumb li a').click(function () {
+    $('.breadcrumb li a').click(function () {
         $('body').showLoading();
     });
+
+    $('.btn-primary, .btn-success').on('click', function () {
+        var $btn = $(this).button('loading')
+        function func() {
+            $btn.button('reset')
+        }
+
+        setTimeout(func, 3000);
+    })
 });
 
 function cookieSet(index) {

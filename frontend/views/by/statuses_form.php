@@ -13,14 +13,14 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
     <?php if($modelStatuses): ?>
 
-        <?= $form->field($modelStatuses, 'sostatus')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($modelStatuses, 'sostatus')->textInput(['maxlength' => '45']) ?>
 
-        <?= $form->field($modelStatuses, 'status')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($modelStatuses, 'status')->textInput(['maxlength' => '45']) ?>
 
-        <?= $form->field($modelStatuses, 'status_name')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($modelStatuses, 'status_name')->textInput(['maxlength' => '45']) ?>
 
         <div class="form-group">
-            <?= Html::submitButton($modelStatuses->isNewRecord ? 'Добавить' : 'Обновить', ['class' => $modelStatuses->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+            <?= Html::submitButton($modelStatuses->isNewRecord ? 'Добавить' : 'Обновить', ['class' => $modelStatuses->isNewRecord ? 'btn btn-success' : 'btn                        btn-primary', 'data-loading-text' => 'Подождите...', 'autocomplete'=>"off"]) ?>
         </div>
     <?php endif; ?>
     <?php ActiveForm::end(); ?>

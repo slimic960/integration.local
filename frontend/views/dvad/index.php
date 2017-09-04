@@ -275,7 +275,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'class' => 'yii\grid\ActionColumn',
                         'header'=>  Html::a('<i class="material-icons button refresh">settings_backup_restore</i>',['index'] , [ 'title' => Yii::t('app', 'Сбросить') ]),
                         'headerOptions' => ['width' => '60'],
-                        'template' => '{offerid-update}{delete-offerid} {redelete-offerid}',
+                        'template' => '{offerid-update} {delete-offerid} {redelete-offerid}',
                         'buttons' => [
                             'offerid-update' => function ($id, $modelOfferId) {
                                 $options = [

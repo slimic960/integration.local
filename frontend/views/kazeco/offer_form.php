@@ -19,7 +19,7 @@ use yii\widgets\ActiveForm;
 
 
     <div class="form-group">
-        <?= Html::submitButton($modelOffer->isNewRecord ? 'Добавить' : 'Обновить', ['class' => $modelOffer->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($modelOffer->isNewRecord ? 'Добавить' : 'Обновить', ['class' => $modelOffer->isNewRecord ? 'btn btn-success' : 'btn btn-primary',            'data-loading-text' => 'Подождите...', 'autocomplete'=>"off"]) ?>
     </div>
     <?php endif; ?>
     <?php ActiveForm::end(); ?>

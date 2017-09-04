@@ -2,6 +2,9 @@
 
 use yii\helpers\Html;
 
+$this->registerJsFile('/js/editcall.js',
+    ['depends' => [\yii\web\JqueryAsset::className()]]
+);
 /* @var $this yii\web\View */
 /* @var $modelCountry common\models\MappingCountryIdDvad */
 
