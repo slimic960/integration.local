@@ -37,7 +37,7 @@ AppAsset::register($this);
     ]);
     if (Yii::$app->user->can('admin')) {
     $menuItems[] = '<li class="admin-li">'
-        . Html::a('<i class="material-icons admin-icons">settings</i>', Yii::$app->backendUrlManager->createUrl(['/index/', 'url' => $model->alias]),
+        . Html::a('<i class="material-icons admin-icons">settings</i>', Yii::$app->backendUrlManager->createUrl(['/']),
             ['title' => Yii::t('app', 'Админ-панель')])
         . '</li>';
     }

@@ -55,7 +55,7 @@ return [
         */
         'frontendUrlManager' => [
             'class' => 'yii\web\urlManager',
-            'baseUrl' => 'http://integration.local',
+            'baseUrl' => 'http://integration.crm.zdorov.top/',
             'enablePrettyUrl' => true,
             'showScriptName' => false,
         ],

@@ -7,7 +7,7 @@ $this->registerJsFile('/js/editcall.js',
 /* @var $this yii\web\View */
 /* @var $modelOfferId common\models\MappingOfferProductIdDvad */
 
-$this->title = 'Update Mapping Country Id Dvad: ' . $model->id;
+$this->title = 'Update Mapping Country Id Dvad: ';
 $this->params['breadcrumbs'][] = ['label' => 'Колл-центр DvaD', 'url' => ['index']];
 $this->params['breadcrumbs'][] = 'Изменить';
 ?>
