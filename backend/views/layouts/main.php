@@ -36,7 +36,7 @@ AppAsset::register($this);
         ],
     ]);
     $menuItems[] = '<li>'
-        . Html::a('<i class="material-icons admin-icons">home</i>', Yii::$app->frontendUrlManager->createUrl(['/index/', 'url' => $model->alias]),
+        . Html::a('<i class="material-icons admin-icons">home</i>', Yii::$app->frontendUrlManager->createUrl(['/index/']),
             ['title' => Yii::t('app', 'Главная')])
         . '</li>';
     if (Yii::$app->user->isGuest) {
