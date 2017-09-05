@@ -49,7 +49,7 @@ $this->title = 'Интеграция';
                 'email:email',
 
                 ['class' => 'yii\grid\ActionColumn',
-                    'template' => '{permit}',
+                    'template' => '{permit} {delete-user} {redelete-user}',
                     'headerOptions' => ['width' => '30'],
                     'buttons' =>
                         [
@@ -57,6 +57,22 @@ $this->title = 'Интеграция';
                                 return Html::a('<i class="material-icons button redelete">build</i>', Url::to(['/permit/user/view', 'id' => $model->id]), [
                                     'title' => Yii::t('yii', 'Изменить роль пользователя')
                                 ]); },
+
+                            'delete-user' => function ($url, $model) {
+                                $options = [
+                                    'title' => Yii::t('yii', 'Удалить'),
+                                    'aria-label' => Yii::t('yii', 'Удалить'),
+                                    'data-confirm' => Yii::t('yii', 'Вы уверены что хотите удалить?'),
+                                    'data-method' => 'post',
+                                    'data-pjax' => '0',
+                                ];
+                                return $model->status == 10 ? Html::a('
+                                    <i class="material-icons button delete">delete</i>', $url, $options) : '';
+                            },
+                            'redelete-user' => function ($url, $modelOffers) {
+                                return $modelOffers->status == 0 ? Html::a('
+                                    <i class="material-icons button redelete">undo</i>', $url, [ 'title' => Yii::t('app', 'Восстановить') ]) : '';
+                            },
                         ]
                 ],
             ],

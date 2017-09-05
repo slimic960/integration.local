@@ -113,4 +113,20 @@ class SiteController extends Controller
         return $this->goHome();
     }
 
+    public function actionDeleteUser($id)
+    {
+        Yii::$app->db->createCommand()
+            ->update('callcenter.user', ['status' => 0], ['id' => $id])
+            ->execute();
+        return $this->redirect(['index']);
+    }
+
+    public function actionRedeleteUser($id)
+    {
+        Yii::$app->db->createCommand()
+            ->update('callcenter.user', ['status' => 10], ['id' => $id])
+            ->execute();
+        return $this->redirect(['index']);
+    }
+
 }
