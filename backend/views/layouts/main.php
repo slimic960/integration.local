@@ -29,14 +29,14 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => Html::a(' <span class="logo"></span><i class="material-icons">wc</i>',['site/index'] , [ 'title' => Yii::t('app', 'Интеграция') ]),
+        'brandLabel' => Html::a(' <span class="logo"></span><i class="material-icons">wc</i>',['/'] , [ 'title' => Yii::t('app', 'Интеграция') ]),
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-integ navbar-fixed-top',
         ],
     ]);
     $menuItems[] = '<li>'
-        . Html::a('<i class="material-icons admin-icons">home</i>', Yii::$app->frontendUrlManager->createUrl(['/index/']),
+        . Html::a('<i class="material-icons admin-icons">home</i>', Yii::$app->frontendUrlManager->createUrl(['/']),
             ['title' => Yii::t('app', 'Главная')])
         . '</li>';
     if (Yii::$app->user->isGuest) {
