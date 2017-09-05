@@ -389,6 +389,10 @@ tbody tr:hover {
     min-width: 290px;
 }
 
+.panel-reg{
+    border-right: 6px solid rgba(170, 0, 9, 0.48)
+}
+
 @media (min-width: 768px){
     .navbar-nav > li > a {
         padding-top: 10px;
