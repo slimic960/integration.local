@@ -26,7 +26,7 @@ class TwokController extends \yii\web\Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'roles' => ['admin','user2K'],
+                        'roles' => ['admin','userTwok'],
                     ],
                 ],
             ],
