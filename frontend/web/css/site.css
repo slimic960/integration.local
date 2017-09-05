@@ -381,6 +381,10 @@ tbody tr:hover {
     background-color: #cd8484;
 }
 
+.panel-reg{
+    border-right: 7px solid rgba(104, 197, 249, 0.53);
+}
+
 @media (min-width: 768px){
     .navbar-nav > li > a {
          padding-top: 15px;

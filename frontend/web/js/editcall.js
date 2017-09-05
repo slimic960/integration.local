@@ -24,7 +24,7 @@ $(document).ready(function() {
         $('body').showLoading();
     });
 
-    $('.btn-primary, .btn-success').on('click', function () {
+    $('.btn-primary, .form-group .btn-success').on('click', function () {
         var $btn = $(this).button('loading')
         function func() {
             $btn.button('reset')

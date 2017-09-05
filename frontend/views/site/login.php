@@ -11,29 +11,33 @@ $this->title = 'Авторизация';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-login">
+    <div class="col-md-6">
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>Пожалуйста, заполните следующие поля для авторизации:</p>
+    <div class="panel panel-default">
+        <div class="panel-body panel-reg">
+        <div class="row">
+            <div class="col-md-12">
+                <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
 
-    <div class="row">
-        <div class="col-lg-5">
-            <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
+                    <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
 
-                <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
+                    <?= $form->field($model, 'password')->passwordInput() ?>
 
-                <?= $form->field($model, 'password')->passwordInput() ?>
+                    <?= $form->field($model, 'rememberMe')->checkbox() ?>
 
-                <?= $form->field($model, 'rememberMe')->checkbox() ?>
+                    <div style="color:#999;margin:1em 0">
+                        Если вы забыли свой пароль, вы можете <?= Html::a('восстановить', ['site/request-password-reset']) ?>.
+                    </div>
 
-                <div style="color:#999;margin:1em 0">
-                    Если вы забыли свой пароль, вы можете <?= Html::a('восстановить', ['site/request-password-reset']) ?>.
-                </div>
+                    <div class="form-group">
+                        <?= Html::submitButton('Войти', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+                    </div>
 
-                <div class="form-group">
-                    <?= Html::submitButton('Войти', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
-                </div>
-
-            <?php ActiveForm::end(); ?>
+                <?php ActiveForm::end(); ?>
+            </div>
         </div>
+        </div>
+    </div>
     </div>
 </div>

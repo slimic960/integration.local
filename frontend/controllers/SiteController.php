@@ -164,8 +164,6 @@ class SiteController extends Controller
         $modelMenu = $this->findModelMenu($id);
 
         if ($modelMenu->load(Yii::$app->request->post()) && $modelMenu->save()) {
-//        $userRole = Yii::$app->authManager->getRole('admin');
-//        Yii::$app->authManager->assign($userRole, $id);
             return $this->redirect(['index']);
         } else {
             return $this->render('menuUpdate', [
@@ -180,8 +178,6 @@ class SiteController extends Controller
         $modelMenuAuth = $this->findModelMenuAuth($id);
         foreach ($modelMenuAuth as $k=>$t) {
             if ($t->save()) {
-//        $userRole = Yii::$app->authManager->getRole('admin');
-//        Yii::$app->authManager->assign($userRole, $id);
                 return $this->redirect(['menu']);
             } else {
                 return $this->render('authUpdate', [
@@ -245,11 +241,11 @@ class SiteController extends Controller
         $model = new PasswordResetRequestForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail()) {
-                Yii::$app->session->setFlash('success', 'Check your email for further instructions.');
+                Yii::$app->session->setFlash('success', 'Проверьте вашу электронную почту для получения дальнейших инструкций.');
 
                 return $this->goHome();
             } else {
-                Yii::$app->session->setFlash('error', 'Sorry, we are unable to reset password for the provided email address.');
+                Yii::$app->session->setFlash('error', 'К сожалению, мы не можем сбросить пароль на указанный адрес электронной почты.');
             }
         }
 
@@ -274,7 +270,7 @@ class SiteController extends Controller
         }
 
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->resetPassword()) {
-            Yii::$app->session->setFlash('success', 'New password saved.');
+            Yii::$app->session->setFlash('success', 'Новый пароль сохранен.');
 
             return $this->goHome();
         }
@@ -282,37 +278,6 @@ class SiteController extends Controller
         return $this->render('resetPassword', [
             'model' => $model,
         ]);
-    }
-
-    public function actionRole($id){
-//        $admin = Yii::$app->authManager->createRole('admin');
-//        $admin->description = 'Администратор';
-//        Yii::$app->authManager->add($admin);
-//
-//        $content = Yii::$app->authManager->createRole('content');
-//        $content->description = 'content';
-//        Yii::$app->authManager->add($content);
-//
-//        $user = Yii::$app->authManager->createRole('userKazeco');
-//        $user->description = 'UserKazeco';
-//        Yii::$app->authManager->add($user);
-//
-//        $ban = Yii::$app->authManager->createRole('ban');
-//        $ban->description = 'ban';
-//        Yii::$app->authManager->add($ban);
-//
-//        $permit = Yii::$app->authManager->createPermission('viewIndexKazeco');
-//        $permit->description = 'Право на просмотр Kazeco';
-//        Yii::$app->authManager->add($permit);
-//
-//        $role_a = Yii::$app->authManager->getRole('userKazeco');
-//        $permit = Yii::$app->authManager->getPermission('viewIndexKazeco');
-//        Yii::$app->authManager->addChild($role_a, $permit);
-
-//        $userRole = Yii::$app->authManager->getRole('userKazeco');
-//        Yii::$app->authManager->assign($userRole, Yii::$app->user->getId());
-
-        return 123;
     }
 }
 
