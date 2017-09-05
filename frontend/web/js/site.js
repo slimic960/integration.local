@@ -120,6 +120,6 @@ $('body').click(function() {
     randomizeColor();
 });
 
-$('.thumbnail').click(function () {
+$('.site-index .thumbnail').click(function () {
     $('body').showLoading();
 });
