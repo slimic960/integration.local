@@ -26,6 +26,7 @@ class User extends ActiveRecord implements IdentityInterface, UserRbacInterface
 {
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE = 10;
+    const STATUS_ADMIN = 20;
 
     /**
      * @inheritdoc
@@ -51,8 +52,8 @@ class User extends ActiveRecord implements IdentityInterface, UserRbacInterface
     public function rules()
     {
         return [
-            ['status', 'default', 'value' => self::STATUS_ACTIVE],
-            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
+            ['status', 'default', 'value' => [self::STATUS_ACTIVE, self::STATUS_ADMIN]],
+            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED, self::STATUS_ADMIN]],
         ];
     }
 
@@ -73,7 +74,7 @@ class User extends ActiveRecord implements IdentityInterface, UserRbacInterface
      */
     public static function findIdentity($id)
     {
-        return static::findOne(['id' => $id, 'status' => self::STATUS_ACTIVE]);
+        return static::findOne(['id' => $id, 'status' => [self::STATUS_ACTIVE, self::STATUS_ADMIN]]);
     }
 
     /**
@@ -92,7 +93,7 @@ class User extends ActiveRecord implements IdentityInterface, UserRbacInterface
      */
     public static function findByUsername($username)
     {
-        return static::findOne(['username' => $username, 'status' => self::STATUS_ACTIVE]);
+        return static::findOne(['username' => $username, 'status' => [self::STATUS_ACTIVE, self::STATUS_ADMIN]]);
     }
 
     /**

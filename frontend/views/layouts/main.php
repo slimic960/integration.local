@@ -42,8 +42,12 @@ AppAsset::register($this);
         . '</li>';
     }
     if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Регистрация', 'url' => ['/site/signup'] ];
-        $menuItems[] = ['label' => 'Авторизация', 'url' => ['/site/login']];
+        $menuItems[] = ['label' => 'Регистрация', 'url' => ['/site/signup'],  'options' => [
+            'class' => 'button_guest',
+        ]];
+        $menuItems[] = ['label' => 'Авторизация', 'url' => ['/site/login'],  'options' => [
+            'class' => 'button_guest',
+        ]];
     } else {
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')

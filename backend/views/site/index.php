@@ -54,9 +54,8 @@ $this->title = 'Интеграция';
                     'buttons' =>
                         [
                             'permit' => function ($url, $model) {
-                                return Html::a('<i class="material-icons button redelete">build</i>', Url::to(['/permit/user/view', 'id' => $model->id]), [
-                                    'title' => Yii::t('yii', 'Изменить роль пользователя')
-                                ]); },
+                                return  $model->id != 2 ? Html::a('
+                            <i class="material-icons button redelete">build</i>', Url::to(['/permit/user/view', 'id' => $model->id])): ''; },
 
                             'delete-user' => function ($url, $model) {
                                 $options = [
