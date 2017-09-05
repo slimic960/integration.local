@@ -46,7 +46,7 @@ return [
         ],
         'backendUrlManager' => [
             'class' => 'yii\web\urlManager',
-            'baseUrl' => 'http://integration.crm.zdorov.top/backend/web/index.php',
+            'baseUrl' => 'http://integration.crm.zdorov.top/backend/',
             'enablePrettyUrl' => true,
             'showScriptName' => false,
         ],

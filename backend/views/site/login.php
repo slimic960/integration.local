@@ -11,13 +11,14 @@ $this->title = 'Авторизация';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-login">
+    <div class="col-md-6">
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>Пожалуйста, заполните следующие поля для авторизации:</p>
-
-    <div class="row">
-        <div class="col-lg-5">
-            <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
+        <div class="panel panel-default">
+            <div class="panel-body panel-reg">
+                <div class="row">
+                    <div class="col-md-12">
+                <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
 
                 <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
 
@@ -30,6 +31,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
 
             <?php ActiveForm::end(); ?>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
