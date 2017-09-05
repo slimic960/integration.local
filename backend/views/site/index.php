@@ -10,7 +10,7 @@ $this->registerJsFile('/js/site.js',
 );
 $this->title = 'Интеграция';
 ?>
-<div class="site-index-backend">
+<div class="site-index">
     <br>
     <div class="row">
             <div class="col-sm-6 col-md-6">
