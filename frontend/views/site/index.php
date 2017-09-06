@@ -32,6 +32,9 @@ $i = 0;
                 </div>
                 <?php endif ?>
             <?php endforeach; ?>
+        <?php if($i == 0):?>
+            <div class="alert alert-warning" role="alert">Разрешение на доступ отсутствует, обратитесь к администратору!</div>
+        <?php endif ?>
         <?= LinkPager::widget(['pagination' => $pagination]) ?>
     </div>
 </div>
