@@ -55,7 +55,6 @@ class QualtouchController extends Controller
 
         $query  = mappingofferqualtouch::find();
         $offer_qualtouch = $query->orderBy('id')
-            ->limit(50)
             ->all();
         $offer_count_qualtouch = count($offer_qualtouch);
 

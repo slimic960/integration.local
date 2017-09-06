@@ -63,13 +63,11 @@ class TwokController extends \yii\web\Controller
 
         $query  = mappingofferproductid2k::find();
         $offer_2k = $query->orderBy('id')
-            ->limit(50)
             ->all();
         $offer_count_2k = count($offer_2k);
 
         $query  = mappingstatuses2k::find();
         $statuses_2k = $query->orderBy('id')
-            ->limit(50)
             ->all();
         $statuses_count_2k = count($statuses_2k);
 

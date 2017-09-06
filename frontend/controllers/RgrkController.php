@@ -65,19 +65,16 @@ class RgrkController extends Controller
 
         $query  = mappingcountryrgrk::find();
         $country_rgrk = $query->orderBy('id')
-            ->limit(50)
             ->all();
         $country_count_rgrk = count($country_rgrk);
 
         $query  = mappingofferproductrgrk::find();
         $offer_product_rgrk = $query->orderBy('id')
-            ->limit(50)
             ->all();
         $offer_product_count_rgrk = count($offer_product_rgrk);
 
         $query  = mappingstatusesrgrk::find();
         $statuses_rgrk = $query->orderBy('id')
-            ->limit(50)
             ->all();
         $statuses_count_rgrk = count($statuses_rgrk);
 

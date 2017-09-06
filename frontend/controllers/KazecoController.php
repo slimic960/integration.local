@@ -83,31 +83,26 @@ class KazecoController extends Controller
 
         $query  = mappingcountrykazeco::find();
         $country_kazeco = $query->orderBy('id')
-            ->limit(50)
             ->all();
         $country_count_kazeco = count($country_kazeco);
 
         $query  = mappingdeliveryservicekazeco::find();
         $service_kazeco = $query->orderBy('id')
-            ->limit(50)
             ->all();
         $service_count_kazeco = count($service_kazeco);
 
         $query  = mappingofferkazeco::find();
         $offer_kazeco = $query->orderBy('id')
-            ->limit(50)
             ->all();
         $offer_count_kazeco = count($offer_kazeco);
 
         $query  = mappingofferproductkazeco::find();
         $offer_product_kazeco = $query->orderBy('id')
-            ->limit(50)
             ->all();
         $offer_product_count_kazeco = count($offer_product_kazeco);
 
         $query  = mappingstatuseskazeco::find();
         $statuses_kazeco = $query->orderBy('id')
-            ->limit(50)
             ->all();
         $statuses_count_kazeco = count($statuses_kazeco);
 

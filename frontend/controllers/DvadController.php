@@ -76,25 +76,21 @@ class DvadController extends Controller
 
             $query  = mappingcountryiddvad::find();
             $country_dvad = $query->orderBy('id')
-                ->limit(50)
                 ->all();
             $country_count_dvad = count($country_dvad);
 
             $query  = mappingdeliveryservicedvad::find();
             $service_dvad = $query->orderBy('id')
-                ->limit(50)
                 ->all();
             $service_count_dvad = count($service_dvad);
 
             $query  = mappingofferproductiddvad::find();
             $offer_dvad = $query->orderBy('id')
-                ->limit(50)
                 ->all();
             $offer_count_dvad = count($offer_dvad);
 
             $query  = mappingproductiddvad::find();
             $product_dvad = $query->orderBy('id')
-                ->limit(50)
                 ->all();
             $product_count_dvad = count($product_dvad);
 

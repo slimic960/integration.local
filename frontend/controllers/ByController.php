@@ -66,13 +66,11 @@ class ByController extends Controller
 
         $query  = mappingoffersbysearch::find();
         $offer_by = $query->orderBy('id')
-            ->limit(50)
             ->all();
         $offer_count_by = count($offer_by);
 
         $query  = mappingstatusesby::find();
         $statuses_by = $query->orderBy('id')
-            ->limit(50)
             ->all();
         $statuses_count_by = count($statuses_by);
 

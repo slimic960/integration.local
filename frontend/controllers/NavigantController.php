@@ -55,7 +55,6 @@ class NavigantController extends Controller
 
         $query  = mappingoffernavigant::find();
         $offer_by = $query->orderBy('id')
-            ->limit(50)
             ->all();
         $offer_count_navigant = count($offer_by);
 
