@@ -100,7 +100,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 $options = [
                                     'title' => Yii::t('yii', 'Удалить'),
                                     'aria-label' => Yii::t('yii', 'Удалить'),
-                                    'data-confirm' => Yii::t('yii', 'Вы уверены что хотите удалить?'),
+                                    'data-confirm' => Yii::t('yii', 'Вы уверены что хотите удалить ('.$modelOffers->by_offer.') ?'),
                                     'data-method' => 'post',
                                     'data-pjax' => '0',
                                 ];
@@ -108,8 +108,15 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <i class="material-icons button delete">delete</i>', $url, $options) : '';
                             },
                             'redelete-offer' => function ($url, $modelOffers) {
+                                $options = [
+                                    'title' => Yii::t('yii', 'Удалить'),
+                                    'aria-label' => Yii::t('yii', 'Удалить'),
+                                    'data-confirm' => Yii::t('yii', 'Вы уверены что хотите восстановить ('.$modelOffers->by_offer.') ?'),
+                                    'data-method' => 'post',
+                                    'data-pjax' => '0',
+                                ];
                                 return $modelOffers->active == 0 ? Html::a('
-                                    <i class="material-icons button redelete">undo</i>', $url, [ 'title' => Yii::t('app', 'Восстановить') ]) : '';
+                                    <i class="material-icons button redelete">undo</i>', $url, $options, [ 'title' => Yii::t('app', 'Восстановить') ]) : '';
                             },
                         ],
                     ],
@@ -195,7 +202,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 $options = [
                                     'title' => Yii::t('yii', 'Удалить'),
                                     'aria-label' => Yii::t('yii', 'Удалить'),
-                                    'data-confirm' => Yii::t('yii', 'Вы уверены что хотите удалить?'),
+                                    'data-confirm' => Yii::t('yii', 'Вы уверены что хотите удалить ('.$modelStatuses->sostatus.') ?'),
                                     'data-method' => 'post',
                                     'data-pjax' => '0',
                                 ];
@@ -203,8 +210,15 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <i class="material-icons button delete">delete</i>', $url, $options) : '';
                             },
                             'redelete-statuses' => function ($url, $modelStatuses) {
+                                $options = [
+                                    'title' => Yii::t('yii', 'Удалить'),
+                                    'aria-label' => Yii::t('yii', 'Удалить'),
+                                    'data-confirm' => Yii::t('yii', 'Вы уверены что хотите восстановить ('.$modelStatuses->sostatus.') ?'),
+                                    'data-method' => 'post',
+                                    'data-pjax' => '0',
+                                ];
                                 return $modelStatuses->status_terminal == 0 ? Html::a('
-                                    <i class="material-icons button redelete">undo</i>', $url, [ 'title' => Yii::t('app', 'Восстановить') ]) : '';
+                                    <i class="material-icons button redelete">undo</i>', $url, $options, [ 'title' => Yii::t('app', 'Восстановить') ]) : '';
                             },
                         ],
                     ],
