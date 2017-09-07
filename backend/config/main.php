@@ -13,7 +13,7 @@ return [
     'bootstrap' => ['log'],
     'modules' => [
         'permit' => [
-            'class' => 'developeruz\db_rbac\Yii2DbRbac',
+            'class' => 'slimic960\db_rbac\Yii2DbRbac',
              'params' => [
                 'userClass' => 'common\models\User',
                 'accessRoles' => ['admin']

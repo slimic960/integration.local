@@ -6,7 +6,7 @@ use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
-use developeruz\db_rbac\interfaces\UserRbacInterface;
+use slimic960\db_rbac\interfaces\UserRbacInterface;
 
 /**
  * User model
