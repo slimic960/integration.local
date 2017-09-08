@@ -94,9 +94,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'title' => Yii::t('yii', 'Изменить'),
                                     'aria-label' => Yii::t('yii', 'Изменить'),
                                 ];
-                                return Html::a(
-                                    '<i class="material-icons button edit">edit</i>',
-                                     $url, $options, $modelOffers);
+                              if (Yii::$app->user->can('editIndexTwok') || Yii::$app->user->can('admin')) {
+                                  return Html::a(
+                                      '<i class="material-icons button edit">edit</i>',
+                                      $url, $options, $modelOffers);
+                              }
                             },
                             'delete-offer' => function ($url, $modelOffers) {
                                 $options = [
@@ -106,8 +108,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'data-method' => 'post',
                                     'data-pjax' => '0',
                                 ];
-                                 return $modelOffers->status_active == 1 ? Html::a('
-                                    <i class="material-icons button delete">delete</i>', $url, $options) : '';
+                                if (Yii::$app->user->can('editIndexTwok') || Yii::$app->user->can('admin')) {
+                                    return $modelOffers->status_active == 1 ? Html::a('
+                                        <i class="material-icons button delete">delete</i>', $url, $options) : '';
+                                }
                             },
                             'redelete-offer' => function ($url, $modelOffers) {
                                 $options = [
@@ -117,8 +121,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'data-method' => 'post',
                                     'data-pjax' => '0',
                                 ];
-                                return $modelOffers->status_active == 0 ? Html::a('
-                                    <i class="material-icons button redelete">undo</i>', $url, $options, [ 'title' => Yii::t('app', 'Восстановить') ]) : '';
+                                if (Yii::$app->user->can('editIndexTwok') || Yii::$app->user->can('admin')) {
+                                    return $modelOffers->status_active == 0 ? Html::a('
+                                    <i class="material-icons button redelete">undo</i>', $url, $options, ['title' => Yii::t('app', 'Восстановить')]) : '';
+                                }
                             },
                         ],
                     ],
