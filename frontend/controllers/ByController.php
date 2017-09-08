@@ -12,6 +12,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\web\ForbiddenHttpException;
 
 
 /**
@@ -27,10 +28,24 @@ class ByController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
+                'only' => [
+                    'index',
+                    'delete-offer', 'redelete-offer', 'delete-statuses', 'redelete-statuses',
+                    'offer-update', 'statuses-update'
+                ],
                 'rules' => [
                     [
+                        'actions' => ['index'],
                         'allow' => true,
-                        'roles' => ['admin','userBy'],
+                        'roles' => ['admin','viewIndexBy'],
+                    ],
+                    [
+                        'actions' => [
+                            'delete-offer', 'redelete-offer', 'delete-statuses', 'redelete-statuses',
+                            'offer-update', 'statuses-update'
+                        ],
+                        'allow' => true,
+                        'roles' => ['admin','editIndexBy'],
                     ],
                 ],
             ],
@@ -77,21 +92,8 @@ class ByController extends Controller
         $modelOffers = new MappingOffersBY();
         $modelStatuses = new MappingStatusesBY();
 
-        if($modelOffers->load(\Yii::$app->request->post()) && $modelOffers->validate()){
-            if ($modelOffers->load(Yii::$app->request->post()) && $modelOffers->save()) {
-                return $this->redirect(['index']);
-            }else {
-                return $this->redirect(['index']);
-            }
-        }
-
-        if($modelStatuses->load(\Yii::$app->request->post()) && $modelStatuses->validate()){
-            if ($modelStatuses->load(Yii::$app->request->post()) && $modelStatuses->save()) {
-                return $this->redirect(['index']);
-            }else {
-                return $this->redirect(['index']);
-            }
-        }
+        $this->actionOfferCreate($modelOffers);
+        $this->actionStatusesCreate($modelStatuses);
 
 
         return  $this->render('index', compact(
@@ -105,6 +107,37 @@ class ByController extends Controller
             'searchModelOffer',
             'searchModelStatuses'
         ));
+    }
+
+
+    public function actionOfferCreate($modelOffers)
+    {
+            if($modelOffers->load(\Yii::$app->request->post()) && $modelOffers->validate()){
+                if (Yii::$app->user->can('editIndexBy')) {
+                if ($modelOffers->load(Yii::$app->request->post()) && $modelOffers->save()) {
+                    return $this->redirect(['index']);
+                }else{
+                    return $this->redirect(['index']);
+                }
+            }else {
+                    throw new ForbiddenHttpException('Вам не разрешено производить данное действие.');
+                }
+        }
+    }
+
+    public function actionStatusesCreate($modelStatuses)
+    {
+        if($modelStatuses->load(\Yii::$app->request->post()) && $modelStatuses->validate()) {
+            if (Yii::$app->user->can('editIndexBy')) {
+                if ($modelStatuses->load(Yii::$app->request->post()) && $modelStatuses->save()) {
+                    return $this->redirect(['index']);
+                } else {
+                    return $this->redirect(['index']);
+                }
+            }else {
+                throw new ForbiddenHttpException('Вам не разрешено производить данное действие.');
+            }
+        }
     }
 
     /**

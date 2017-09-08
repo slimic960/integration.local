@@ -6,6 +6,7 @@ use Yii;
 use frontend\models\Callcenter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\MappingStatusesRgrk;
@@ -21,10 +22,24 @@ class RgrkController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
+                'only' => [
+                    'index',
+                    'delete-country', 'redelete-country', 'delete-offer-product', 'redelete-offer-product', 'delete-statuses', 'redelete-statuses',
+                    'country-update', 'offer-product-update', 'statuses-update'
+                ],
                 'rules' => [
                     [
+                        'actions' => ['index'],
                         'allow' => true,
-                        'roles' => ['admin','userRgrk'],
+                        'roles' => ['admin','viewIndexRgrk'],
+                    ],
+                    [
+                        'actions' => [
+                            'delete-country', 'redelete-country', 'delete-offer-product', 'redelete-offer-product', 'delete-statuses', 'redelete-statuses',
+                            'country-update', 'offer-product-update', 'statuses-update'
+                        ],
+                        'allow' => true,
+                        'roles' => ['admin','editIndexRgrk'],
                     ],
                 ],
             ],
@@ -82,31 +97,9 @@ class RgrkController extends Controller
         $modelOfferProduct = new MappingOfferProductRgrk();
         $modelStatuses = new MappingStatusesRgrk();
 
-        if($modelCountry->load(\Yii::$app->request->post()) && $modelCountry->validate()){
-            if ($modelCountry->load(Yii::$app->request->post()) && $modelCountry->save()) {
-                return $this->redirect(['index']);
-            }else {
-                return $this->redirect(['index']);
-            }
-        }
-
-
-        if($modelOfferProduct->load(\Yii::$app->request->post()) && $modelOfferProduct->validate()){
-            if ($modelOfferProduct->load(Yii::$app->request->post()) && $modelOfferProduct->save()) {
-                return $this->redirect(['index']);
-            }else {
-                return $this->redirect(['index']);
-            }
-        }
-
-        if($modelStatuses->load(\Yii::$app->request->post()) && $modelStatuses->validate()){
-            if ($modelStatuses->load(Yii::$app->request->post()) && $modelStatuses->save()) {
-                return $this->redirect(['index']);
-            }else {
-                return $this->redirect(['index']);
-            }
-        }
-
+        $this->actionCountryCreate($modelCountry);
+        $this->actionOfferProductCreate($modelOfferProduct);
+        $this->actionStatusesCreate($modelStatuses);
 
         return  $this->render('index', compact(
             'callcenter',
@@ -123,6 +116,51 @@ class RgrkController extends Controller
             'searchModelOfferProduct',
             'searchModelStatuses'
         ));
+    }
+
+    public function actionCountryCreate($modelCountry)
+    {
+        if($modelCountry->load(\Yii::$app->request->post()) && $modelCountry->validate()){
+            if (Yii::$app->user->can('editIndexRgrk')) {
+                if ($modelCountry->load(Yii::$app->request->post()) && $modelCountry->save()) {
+                    return $this->redirect(['index']);
+                } else {
+                    return $this->redirect(['index']);
+                }
+            }else {
+                throw new ForbiddenHttpException('Вам не разрешено производить данное действие.');
+            }
+        }
+    }
+
+    public function actionOfferProductCreate($modelOfferProduct)
+    {
+        if($modelOfferProduct->load(\Yii::$app->request->post()) && $modelOfferProduct->validate()){
+            if (Yii::$app->user->can('editIndexRgrk')) {
+                if ($modelOfferProduct->load(Yii::$app->request->post()) && $modelOfferProduct->save()) {
+                    return $this->redirect(['index']);
+                } else {
+                    return $this->redirect(['index']);
+                }
+            }else {
+                throw new ForbiddenHttpException('Вам не разрешено производить данное действие.');
+            }
+        }
+    }
+
+    public function actionStatusesCreate($modelStatuses)
+    {
+        if($modelStatuses->load(\Yii::$app->request->post()) && $modelStatuses->validate()){
+            if (Yii::$app->user->can('editIndexRgrk')) {
+                if ($modelStatuses->load(Yii::$app->request->post()) && $modelStatuses->save()) {
+                    return $this->redirect(['index']);
+                } else {
+                    return $this->redirect(['index']);
+                }
+            }else {
+                throw new ForbiddenHttpException('Вам не разрешено производить данное действие.');
+            }
+        }
     }
 
     /**

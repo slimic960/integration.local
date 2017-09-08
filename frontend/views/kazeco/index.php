@@ -35,6 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="panel-footer panel-callcenter">
             <p>
             <div>
+                <?php  if (Yii::$app->user->can('editIndexKazeco') || Yii::$app->user->can('admin')): ?>
                 <?php Modal::begin([
                     'header' => '<h2>Добавить страну</h2>',
                     'toggleButton' => [
@@ -49,6 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'modelCountry' => $modelCountry,
                 ]) ?>
                 <?php Modal::end(); ?>
+                <?php endif ?>
             </div>
             </p>
             <?php Pjax::begin(); ?>
@@ -93,9 +95,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'title' => Yii::t('yii', 'Изменить'),
                                     'aria-label' => Yii::t('yii', 'Изменить'),
                                 ];
-                                return Html::a(
-                                    '<i class="material-icons button edit">edit</i>',
-                                     $url, $options, $modelCountry);
+                                  if (Yii::$app->user->can('editIndexKazeco') || Yii::$app->user->can('admin')) {
+                                      return Html::a(
+                                          '<i class="material-icons button edit">edit</i>',
+                                          $url, $options, $modelCountry);
+                                  }
                             },
                             'delete-country' => function ($url, $modelCountry) {
                                 $options = [
@@ -105,8 +109,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'data-method' => 'post',
                                     'data-pjax' => '0',
                                 ];
-                                 return $modelCountry->status_active == 1 ? Html::a('
+                                  if (Yii::$app->user->can('editIndexKazeco') || Yii::$app->user->can('admin')) {
+                                      return $modelCountry->status_active == 1 ? Html::a('
                                     <i class="material-icons button delete">delete</i>', $url, $options) : '';
+                                  }
                             },
                             'redelete-country' => function ($url, $modelCountry) {
                                 $options = [
@@ -116,8 +122,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'data-method' => 'post',
                                     'data-pjax' => '0',
                                 ];
-                                return $modelCountry->status_active == 0 ? Html::a('
-                                    <i class="material-icons button redelete">undo</i>', $url, $options, [ 'title' => Yii::t('app', 'Восстановить') ]) : '';
+                                if (Yii::$app->user->can('editIndexKazeco') || Yii::$app->user->can('admin')) {
+                                    return $modelCountry->status_active == 0 ? Html::a('
+                                    <i class="material-icons button redelete">undo</i>', $url, $options, ['title' => Yii::t('app', 'Восстановить')]) : '';
+                                }
                             },
                         ],
                     ],
@@ -139,6 +147,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="panel-footer panel-callcenter">
             <p>
             <div>
+                <?php  if (Yii::$app->user->can('editIndexKazeco') || Yii::$app->user->can('admin')): ?>
                 <?php Modal::begin([
                     'header' => '<h2>Добавить сервис</h2>',
                     'toggleButton' => [
@@ -153,6 +162,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'modelService' => $modelService,
                 ]) ?>
                 <?php Modal::end(); ?>
+                <?php endif ?>
             </div>
             </p>
             <?php Pjax::begin(); ?>
@@ -196,9 +206,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'title' => Yii::t('yii', 'Изменить'),
                                     'aria-label' => Yii::t('yii', 'Изменить'),
                                 ];
-                                return Html::a(
-                                    '<i class="material-icons button edit">edit</i>',
-                                    $url, $options, $modelService);
+                                 if (Yii::$app->user->can('editIndexKazeco') || Yii::$app->user->can('admin')) {
+                                     return Html::a(
+                                         '<i class="material-icons button edit">edit</i>',
+                                         $url, $options, $modelService);
+                                 }
                             },
                             'delete-service' => function ($url, $modelService) {
                                 $options = [
@@ -208,8 +220,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'data-method' => 'post',
                                     'data-pjax' => '0',
                                 ];
-                                return $modelService->status_active == 1 ? Html::a('
+                               if (Yii::$app->user->can('editIndexKazeco') || Yii::$app->user->can('admin')) {
+                                   return $modelService->status_active == 1 ? Html::a('
                                     <i class="material-icons button delete">delete</i>', $url, $options) : '';
+                               }
                             },
                             'redelete-service' => function ($url, $modelService) {
                                 $options = [
@@ -219,8 +233,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'data-method' => 'post',
                                     'data-pjax' => '0',
                                 ];
-                                return $modelService->status_active == 0 ? Html::a('
-                                    <i class="material-icons button redelete">undo</i>', $url, $options, [ 'title' => Yii::t('app', 'Восстановить') ]) : '';
+                                 if (Yii::$app->user->can('editIndexKazeco') || Yii::$app->user->can('admin')) {
+                                     return $modelService->status_active == 0 ? Html::a('
+                                    <i class="material-icons button redelete">undo</i>', $url, $options, ['title' => Yii::t('app', 'Восстановить')]) : '';
+                                 }
                             },
                         ],
                     ],
@@ -241,6 +257,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="panel-footer panel-callcenter">
             <p>
             <div>
+                <?php  if (Yii::$app->user->can('editIndexKazeco') || Yii::$app->user->can('admin')): ?>
                 <?php Modal::begin([
                     'header' => '<h2>Добавить оффер</h2>',
                     'toggleButton' => [
@@ -255,6 +272,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'modelOffer' => $modelOffer,
                 ]) ?>
                 <?php Modal::end(); ?>
+                <?php endif ?>
             </div>
             </p>
             <?php Pjax::begin(); ?>
@@ -297,9 +315,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'title' => Yii::t('yii', 'Изменить'),
                                     'aria-label' => Yii::t('yii', 'Изменить'),
                                 ];
-                                return Html::a(
-                                    '<i class="material-icons button edit">edit</i>',
-                                    $url, $options, $modelOffer);
+                                  if (Yii::$app->user->can('editIndexKazeco') || Yii::$app->user->can('admin')) {
+                                      return Html::a(
+                                          '<i class="material-icons button edit">edit</i>',
+                                          $url, $options, $modelOffer);
+                                  }
                             },
                             'delete-offer' => function ($url, $modelOffer) {
                                 $options = [
@@ -309,8 +329,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'data-method' => 'post',
                                     'data-pjax' => '0',
                                 ];
-                                return $modelOffer->active == 1 ? Html::a('
+                                if (Yii::$app->user->can('editIndexKazeco') || Yii::$app->user->can('admin')) {
+                                    return $modelOffer->active == 1 ? Html::a('
                                     <i class="material-icons button delete">delete</i>', $url, $options) : '';
+                                }
                             },
                             'redelete-offer' => function ($url, $modelOffer) {
                                 $options = [
@@ -320,8 +342,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'data-method' => 'post',
                                     'data-pjax' => '0',
                                 ];
-                                return $modelOffer->active == 0 ? Html::a('
-                                    <i class="material-icons button redelete">undo</i>', $url, $options, [ 'title' => Yii::t('app', 'Восстановить') ]) : '';
+                                if (Yii::$app->user->can('editIndexKazeco') || Yii::$app->user->can('admin')) {
+                                    return $modelOffer->active == 0 ? Html::a('
+                                    <i class="material-icons button redelete">undo</i>', $url, $options, ['title' => Yii::t('app', 'Восстановить')]) : '';
+                                }
                             },
                         ],
                     ],
@@ -343,6 +367,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="panel-footer panel-callcenter">
             <p>
             <div>
+                <?php  if (Yii::$app->user->can('editIndexKazeco') || Yii::$app->user->can('admin')): ?>
                 <?php Modal::begin([
                     'header' => '<h2>Добавить продукт</h2>',
                     'toggleButton' => [
@@ -357,6 +382,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'modelOfferProduct' => $modelOfferProduct,
                 ]) ?>
                 <?php Modal::end(); ?>
+                <?php endif ?>
             </div>
             </p>
             <?php Pjax::begin(); ?>
@@ -422,9 +448,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'title' => Yii::t('yii', 'Изменить'),
                                     'aria-label' => Yii::t('yii', 'Изменить'),
                                 ];
-                                return Html::a(
-                                    '<i class="material-icons button edit">edit</i>',
-                                    $url, $options, $modelOfferProduct);
+                                if (Yii::$app->user->can('editIndexKazeco') || Yii::$app->user->can('admin')) {
+                                    return Html::a(
+                                        '<i class="material-icons button edit">edit</i>',
+                                        $url, $options, $modelOfferProduct);
+                                }
                             },
                             'delete-offer-product' => function ($url, $modelOfferProduct) {
                                 $options = [
@@ -434,8 +462,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'data-method' => 'post',
                                     'data-pjax' => '0',
                                 ];
-                                return $modelOfferProduct->active == 1 ? Html::a('
-                                    <i class="material-icons button delete">delete</i>', $url, $options) : '';
+                                if (Yii::$app->user->can('editIndexKazeco') || Yii::$app->user->can('admin')) {
+                                    return $modelOfferProduct->active == 1 ? Html::a('
+                                        <i class="material-icons button delete">delete</i>', $url, $options) : '';
+                                }
                             },
                             'redelete-offer-product' => function ($url, $modelOfferProduct) {
                                 $options = [
@@ -445,8 +475,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'data-method' => 'post',
                                     'data-pjax' => '0',
                                 ];
-                                return $modelOfferProduct->active == 0 ? Html::a('
-                                    <i class="material-icons button redelete">undo</i>', $url, $options, [ 'title' => Yii::t('app', 'Восстановить') ]) : '';
+                                 if (Yii::$app->user->can('editIndexKazeco') || Yii::$app->user->can('admin')) {
+                                     return $modelOfferProduct->active == 0 ? Html::a('
+                                    <i class="material-icons button redelete">undo</i>', $url, $options, ['title' => Yii::t('app', 'Восстановить')]) : '';
+                                 }
                             },
                         ],
                     ],
@@ -468,6 +500,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="panel-footer panel-callcenter">
             <p>
             <div>
+                <?php  if (Yii::$app->user->can('editIndexKazeco') || Yii::$app->user->can('admin')): ?>
                 <?php Modal::begin([
                     'header' => '<h2>Добавить статус</h2>',
                     'toggleButton' => [
@@ -482,6 +515,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'modelStatuses' => $modelStatuses,
                 ]) ?>
                 <?php Modal::end(); ?>
+                <?php endif ?>
             </div>
             </p>
             <?php Pjax::begin(); ?>
@@ -525,9 +559,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'title' => Yii::t('yii', 'Изменить'),
                                     'aria-label' => Yii::t('yii', 'Изменить'),
                                 ];
-                                return Html::a(
-                                    '<i class="material-icons button edit">edit</i>',
-                                    $url, $options, $modelStatuses);
+                               if (Yii::$app->user->can('editIndexKazeco') || Yii::$app->user->can('admin')) {
+                                   return Html::a(
+                                       '<i class="material-icons button edit">edit</i>',
+                                       $url, $options, $modelStatuses);
+                               }
                             },
                             'delete-statuses' => function ($url, $modelStatuses) {
                                 $options = [
@@ -537,8 +573,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'data-method' => 'post',
                                     'data-pjax' => '0',
                                 ];
-                                return $modelStatuses->status_terminal == 1 ? Html::a('
+                               if (Yii::$app->user->can('editIndexKazeco') || Yii::$app->user->can('admin')) {
+                                   return $modelStatuses->status_terminal == 1 ? Html::a('
                                     <i class="material-icons button delete">delete</i>', $url, $options) : '';
+                               }
                             },
                             'redelete-statuses' => function ($url, $modelStatuses) {
                                 $options = [
@@ -548,8 +586,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'data-method' => 'post',
                                     'data-pjax' => '0',
                                 ];
-                                return $modelStatuses->status_terminal == 0 ? Html::a('
-                                    <i class="material-icons button redelete">undo</i>', $url, $options, [ 'title' => Yii::t('app', 'Восстановить') ]) : '';
+                                if (Yii::$app->user->can('editIndexKazeco') || Yii::$app->user->can('admin')) {
+                                    return $modelStatuses->status_terminal == 0 ? Html::a('
+                                    <i class="material-icons button redelete">undo</i>', $url, $options, ['title' => Yii::t('app', 'Восстановить')]) : '';
+                                }
                             },
                         ],
                     ],

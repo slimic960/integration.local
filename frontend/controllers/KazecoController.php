@@ -16,6 +16,7 @@ use common\models\MappingStatusesKazeco;
 use common\models\MappingStatusesKazecoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 
@@ -29,10 +30,26 @@ class KazecoController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
+                'only' => [
+                    'index',
+                    'delete-country', 'redelete-country', 'delete-service', 'redelete-service', 'delete-offer', 'redelete-offer',
+                    'delete-offer-product', 'redelete-offer-product', 'delete-statuses', 'redelete-statuses',
+                    'country-update', 'service-update', 'offer-update', 'offer-product-update', 'statuses-update'
+                ],
                 'rules' => [
                     [
+                        'actions' => ['index'],
                         'allow' => true,
-                        'roles' => ['admin','userKazeco'],
+                        'roles' => ['admin','viewIndexKazeco'],
+                    ],
+                    [
+                        'actions' => [
+                            'delete-country', 'redelete-country', 'delete-service', 'redelete-service', 'delete-offer', 'redelete-offer',
+                            'delete-offer-product', 'redelete-offer-product', 'delete-statuses', 'redelete-statuses',
+                            'country-update', 'service-update', 'offer-update', 'offer-product-update', 'statuses-update'
+                        ],
+                        'allow' => true,
+                        'roles' => ['admin','editIndexKazeco'],
                     ],
                 ],
             ],
@@ -112,45 +129,11 @@ class KazecoController extends Controller
         $modelOfferProduct = new MappingOfferProductKazeco();
         $modelStatuses = new MappingStatusesKazeco();
 
-        if($modelCountry->load(\Yii::$app->request->post()) && $modelCountry->validate()){
-            if ($modelCountry->load(Yii::$app->request->post()) && $modelCountry->save()) {
-                return $this->redirect(['index']);
-            }else {
-                return $this->redirect(['index']);
-            }
-        }
-
-        if($modelService->load(\Yii::$app->request->post()) && $modelService->validate()){
-            if ($modelService->load(Yii::$app->request->post()) && $modelService->save()) {
-                return $this->redirect(['index']);
-            }else {
-                return $this->redirect(['index']);
-            }
-        }
-
-        if($modelOffer->load(\Yii::$app->request->post()) && $modelOffer->validate()){
-            if ($modelOffer->load(Yii::$app->request->post()) && $modelOffer->save()) {
-                return $this->redirect(['index']);
-            }else {
-                return $this->redirect(['index']);
-            }
-        }
-
-        if($modelOfferProduct->load(\Yii::$app->request->post()) && $modelOfferProduct->validate()){
-            if ($modelOfferProduct->load(Yii::$app->request->post()) && $modelOfferProduct->save()) {
-                return $this->redirect(['index']);
-            }else {
-                return $this->redirect(['index']);
-            }
-        }
-
-        if($modelStatuses->load(\Yii::$app->request->post()) && $modelStatuses->validate()){
-            if ($modelStatuses->load(Yii::$app->request->post()) && $modelStatuses->save()) {
-                return $this->redirect(['index']);
-            }else {
-                return $this->redirect(['index']);
-            }
-        }
+        $this->actionCountryCreate($modelCountry);
+        $this->actionServiceCreate($modelService);
+        $this->actionOfferCreate($modelOffer);
+        $this->actionOfferProductCreate($modelOfferProduct);
+        $this->actionStatusesCreate($modelStatuses);
 
 
         return  $this->render('index', compact(
@@ -177,6 +160,83 @@ class KazecoController extends Controller
             'searchModelStatuses'
         ));
     }
+
+    public function actionCountryCreate($modelCountry)
+    {
+        if($modelCountry->load(\Yii::$app->request->post()) && $modelCountry->validate()){
+            if (Yii::$app->user->can('editIndexKazeco')) {
+                if ($modelCountry->load(Yii::$app->request->post()) && $modelCountry->save()) {
+                    return $this->redirect(['index']);
+                } else {
+                    return $this->redirect(['index']);
+                }
+            }else {
+                throw new ForbiddenHttpException('Вам не разрешено производить данное действие.');
+            }
+        }
+    }
+
+    public function actionServiceCreate($modelService)
+    {
+        if($modelService->load(\Yii::$app->request->post()) && $modelService->validate()){
+            if (Yii::$app->user->can('editIndexKazeco')) {
+                if ($modelService->load(Yii::$app->request->post()) && $modelService->save()) {
+                    return $this->redirect(['index']);
+                } else {
+                    return $this->redirect(['index']);
+                }
+            }else {
+                throw new ForbiddenHttpException('Вам не разрешено производить данное действие.');
+            }
+        }
+    }
+
+    public function actionOfferCreate($modelOffer)
+    {
+        if($modelOffer->load(\Yii::$app->request->post()) && $modelOffer->validate()){
+            if (Yii::$app->user->can('editIndexKazeco')) {
+                if ($modelOffer->load(Yii::$app->request->post()) && $modelOffer->save()) {
+                    return $this->redirect(['index']);
+                } else {
+                    return $this->redirect(['index']);
+                }
+            }else {
+                throw new ForbiddenHttpException('Вам не разрешено производить данное действие.');
+            }
+        }
+
+    }
+
+    public function actionOfferProductCreate($modelOfferProduct)
+    {
+        if($modelOfferProduct->load(\Yii::$app->request->post()) && $modelOfferProduct->validate()){
+            if (Yii::$app->user->can('editIndexKazeco')) {
+                if ($modelOfferProduct->load(Yii::$app->request->post()) && $modelOfferProduct->save()) {
+                    return $this->redirect(['index']);
+                } else {
+                    return $this->redirect(['index']);
+                }
+            }else {
+                throw new ForbiddenHttpException('Вам не разрешено производить данное действие.');
+            }
+        }
+    }
+
+    public function actionStatusesCreate($modelStatuses)
+    {
+        if($modelStatuses->load(\Yii::$app->request->post()) && $modelStatuses->validate()){
+            if (Yii::$app->user->can('editIndexKazeco')) {
+                if ($modelStatuses->load(Yii::$app->request->post()) && $modelStatuses->save()) {
+                    return $this->redirect(['index']);
+                } else {
+                    return $this->redirect(['index']);
+                }
+            }else {
+                throw new ForbiddenHttpException('Вам не разрешено производить данное действие.');
+            }
+        }
+    }
+
 
     /**
      * Updates an existing MappingCountryIdDvad model.

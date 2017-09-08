@@ -6,6 +6,7 @@ use Yii;
 use frontend\models\Callcenter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\MappingOfferQualtouch;
@@ -20,10 +21,24 @@ class QualtouchController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
+                'only' => [
+                    'index',
+                    'delete-offer', 'redelete-offer',
+                    'offer-update'
+                ],
                 'rules' => [
                     [
+                        'actions' => ['index'],
                         'allow' => true,
-                        'roles' => ['admin','userQualtouch'],
+                        'roles' => ['admin','viewIndexQualtouch'],
+                    ],
+                    [
+                        'actions' => [
+                            'delete-offer', 'redelete-offer',
+                            'offer-update'
+                        ],
+                        'allow' => true,
+                        'roles' => ['admin','editIndexQualtouch'],
                     ],
                 ],
             ],
@@ -60,13 +75,7 @@ class QualtouchController extends Controller
 
         $modelOffers = new MappingOfferQualtouch();
 
-        if($modelOffers->load(\Yii::$app->request->post()) && $modelOffers->validate()){
-            if ($modelOffers->load(Yii::$app->request->post()) && $modelOffers->save()) {
-                return $this->redirect(['index']);
-            }else {
-                return $this->redirect(['index']);
-            }
-        }
+        $this->actionOffersCreate($modelOffers);
 
         return  $this->render('index', compact(
             'callcenter',
@@ -75,6 +84,21 @@ class QualtouchController extends Controller
             'dataProviderOffer',
             'searchModelOffer'
         ));
+    }
+
+    public function actionOffersCreate($modelOffers)
+    {
+        if($modelOffers->load(\Yii::$app->request->post()) && $modelOffers->validate()){
+            if (Yii::$app->user->can('editIndexQualtouch')) {
+                if ($modelOffers->load(Yii::$app->request->post()) && $modelOffers->save()) {
+                    return $this->redirect(['index']);
+                } else {
+                    return $this->redirect(['index']);
+                }
+            }else {
+                throw new ForbiddenHttpException('Вам не разрешено производить данное действие.');
+            }
+        }
     }
 
     /**

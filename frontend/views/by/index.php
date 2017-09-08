@@ -35,6 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="panel-footer panel-callcenter">
             <p>
             <div>
+                <?php  if (Yii::$app->user->can('editIndexBy') || Yii::$app->user->can('admin')): ?>
                 <?php Modal::begin([
                     'header' => '<h2>Добавить оффер</h2>',
                     'toggleButton' => [
@@ -49,6 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'modelOffers' => $modelOffers,
                 ]) ?>
                 <?php Modal::end(); ?>
+                <?php endif?>
             </div>
             </p>
             <?php Pjax::begin(); ?>
@@ -83,7 +85,8 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
                     [
                         'class' => 'yii\grid\ActionColumn',
-                        'header'=>  Html::a('<i class="material-icons button refresh">settings_backup_restore</i>',['index'] , [ 'title' => Yii::t('app', 'Сбросить') ]),
+                        'header'=>  Html::a('<i class="material-icons button refresh">settings_backup_restore</i>',['index'] ,
+                            [ 'title' => Yii::t('app', 'Сбросить') ]),
                         'headerOptions' => ['width' => '60'],
                         'template' => '{offer-update} {delete-offer} {redelete-offer}',
                         'buttons' => [
@@ -92,9 +95,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'title' => Yii::t('yii', 'Изменить'),
                                     'aria-label' => Yii::t('yii', 'Изменить'),
                                 ];
+                                if (Yii::$app->user->can('editIndexBy') || Yii::$app->user->can('admin')){
                                 return Html::a(
                                     '<i class="material-icons button edit">edit</i>',
                                      $url, $options, $modelOffers);
+                                }
                             },
                             'delete-offer' => function ($url, $modelOffers) {
                                 $options = [
@@ -104,8 +109,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'data-method' => 'post',
                                     'data-pjax' => '0',
                                 ];
-                                 return $modelOffers->active == 1 ? Html::a('
+                                  if (Yii::$app->user->can('editIndexBy') || Yii::$app->user->can('admin')) {
+                                      return $modelOffers->active == 1 ? Html::a('
                                     <i class="material-icons button delete">delete</i>', $url, $options) : '';
+                                  }
                             },
                             'redelete-offer' => function ($url, $modelOffers) {
                                 $options = [
@@ -115,8 +122,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'data-method' => 'post',
                                     'data-pjax' => '0',
                                 ];
-                                return $modelOffers->active == 0 ? Html::a('
-                                    <i class="material-icons button redelete">undo</i>', $url, $options, [ 'title' => Yii::t('app', 'Восстановить') ]) : '';
+                                   if (Yii::$app->user->can('editIndexBy') || Yii::$app->user->can('admin')) {
+                                       return $modelOffers->active == 0 ? Html::a('
+                                    <i class="material-icons button redelete">undo</i>', $url, $options, ['title' => Yii::t('app', 'Восстановить')]) : '';
+                                   }
                             },
                         ],
                     ],
@@ -137,6 +146,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="panel-footer panel-callcenter">
             <p>
             <div>
+                <?php  if (Yii::$app->user->can('editIndexBy') || Yii::$app->user->can('admin')): ?>
                 <?php Modal::begin([
                     'header' => '<h2>Добавить статус</h2>',
                     'toggleButton' => [
@@ -151,6 +161,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'modelStatuses' => $modelStatuses,
                 ]) ?>
                 <?php Modal::end(); ?>
+                <?php endif ?>
             </div>
             </p>
             <?php Pjax::begin(); ?>
@@ -194,9 +205,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'title' => Yii::t('yii', 'Изменить'),
                                     'aria-label' => Yii::t('yii', 'Изменить'),
                                 ];
-                                return Html::a(
-                                    '<i class="material-icons button edit">edit</i>',
-                                    $url, $options, $modelStatuses);
+                               if (Yii::$app->user->can('editIndexBy') || Yii::$app->user->can('admin')) {
+                                   return Html::a(
+                                       '<i class="material-icons button edit">edit</i>',
+                                       $url, $options, $modelStatuses);
+                               }
                             },
                             'delete-statuses' => function ($url, $modelStatuses) {
                                 $options = [
@@ -206,8 +219,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'data-method' => 'post',
                                     'data-pjax' => '0',
                                 ];
-                                return $modelStatuses->status_terminal == 1 ? Html::a('
+                                 if (Yii::$app->user->can('editIndexBy') || Yii::$app->user->can('admin')) {
+                                     return $modelStatuses->status_terminal == 1 ? Html::a('
                                     <i class="material-icons button delete">delete</i>', $url, $options) : '';
+                                 }
                             },
                             'redelete-statuses' => function ($url, $modelStatuses) {
                                 $options = [
@@ -217,8 +232,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'data-method' => 'post',
                                     'data-pjax' => '0',
                                 ];
-                                return $modelStatuses->status_terminal == 0 ? Html::a('
-                                    <i class="material-icons button redelete">undo</i>', $url, $options, [ 'title' => Yii::t('app', 'Восстановить') ]) : '';
+                                 if (Yii::$app->user->can('editIndexBy') || Yii::$app->user->can('admin')) {
+                                     return $modelStatuses->status_terminal == 0 ? Html::a('
+                                    <i class="material-icons button redelete">undo</i>', $url, $options, ['title' => Yii::t('app', 'Восстановить')]) : '';
+                                 }
                             },
                         ],
                     ],

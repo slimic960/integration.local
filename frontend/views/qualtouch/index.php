@@ -35,6 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="panel-footer panel-callcenter">
             <p>
             <div>
+                <?php  if (Yii::$app->user->can('editIndexQualtouch') || Yii::$app->user->can('admin')): ?>
                 <?php Modal::begin([
                     'header' => '<h2>Добавить оффер</h2>',
                     'toggleButton' => [
@@ -49,6 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'modelOffers' => $modelOffers,
                 ]) ?>
                 <?php Modal::end(); ?>
+                <?php endif ?>
             </div>
             </p>
             <?php Pjax::begin(); ?>
@@ -91,9 +93,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'title' => Yii::t('yii', 'Изменить'),
                                     'aria-label' => Yii::t('yii', 'Изменить'),
                                 ];
-                                return Html::a(
-                                    '<i class="material-icons button edit">edit</i>',
+                             if (Yii::$app->user->can('editIndexQualtouch') || Yii::$app->user->can('admin')) {
+                                 return Html::a(
+                                     '<i class="material-icons button edit">edit</i>',
                                      $url, $options, $modelOffers);
+                             }
                             },
                             'delete-offer' => function ($url, $modelOffers) {
                                 $options = [
@@ -103,8 +107,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'data-method' => 'post',
                                     'data-pjax' => '0',
                                 ];
-                                 return $modelOffers->active == 1 ? Html::a('
+                                if (Yii::$app->user->can('editIndexQualtouch') || Yii::$app->user->can('admin')) {
+                                    return $modelOffers->active == 1 ? Html::a('
                                     <i class="material-icons button delete">delete</i>', $url, $options) : '';
+                                }
                             },
                             'redelete-offer' => function ($url, $modelOffers) {
                                 $options = [
@@ -114,8 +120,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'data-method' => 'post',
                                     'data-pjax' => '0',
                                 ];
-                                return $modelOffers->active == 0 ? Html::a('
-                                    <i class="material-icons button redelete">undo</i>', $url, $options, [ 'title' => Yii::t('app', 'Восстановить') ]) : '';
+                                if (Yii::$app->user->can('editIndexQualtouch') || Yii::$app->user->can('admin')) {
+                                    return $modelOffers->active == 0 ? Html::a('
+                                    <i class="material-icons button redelete">undo</i>', $url, $options, ['title' => Yii::t('app', 'Восстановить')]) : '';
+                                }
                             },
                         ],
                     ],

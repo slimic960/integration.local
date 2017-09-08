@@ -35,6 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="panel-footer panel-callcenter">
             <p>
             <div>
+                <?php  if (Yii::$app->user->can('editIndexDvad') || Yii::$app->user->can('admin')): ?>
                 <?php Modal::begin([
                     'header' => '<h2>Добавить страну</h2>',
                     'toggleButton' => [
@@ -49,6 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'modelCountry' => $modelCountry,
                 ]) ?>
                 <?php Modal::end(); ?>
+                <?php endif ?>
             </div>
             </p>
             <?php Pjax::begin(); ?>
@@ -91,9 +93,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'title' => Yii::t('yii', 'Изменить'),
                                     'aria-label' => Yii::t('yii', 'Изменить'),
                                 ];
-                                return Html::a(
-                                    '<i class="material-icons button edit">edit</i>',
-                                     $url, $options, $modelCountry);
+                                if (Yii::$app->user->can('editIndexDvad') || Yii::$app->user->can('admin')) {
+                                    return Html::a(
+                                        '<i class="material-icons button edit">edit</i>',
+                                        $url, $options, $modelCountry);
+                                }
                             },
                             'delete-country' => function ($url, $modelCountry) {
                                 $options = [
@@ -103,8 +107,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'data-method' => 'post',
                                     'data-pjax' => '0',
                                 ];
-                                 return $modelCountry->status_active == 1 ? Html::a('
+                                 if (Yii::$app->user->can('editIndexDvad') || Yii::$app->user->can('admin')) {
+                                     return $modelCountry->status_active == 1 ? Html::a('
                                     <i class="material-icons button delete">delete</i>', $url, $options) : '';
+                                 }
                             },
                             'redelete-country' => function ($url, $modelCountry) {
                                 $options = [
@@ -114,8 +120,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'data-method' => 'post',
                                     'data-pjax' => '0',
                                 ];
-                                return $modelCountry->status_active == 0 ? Html::a('
-                                    <i class="material-icons button redelete">undo</i>', $url, $options, [ 'title' => Yii::t('app', 'Восстановить') ]) : '';
+                                  if (Yii::$app->user->can('editIndexDvad') || Yii::$app->user->can('admin')) {
+                                      return $modelCountry->status_active == 0 ? Html::a('
+                                    <i class="material-icons button redelete">undo</i>', $url, $options, ['title' => Yii::t('app', 'Восстановить')]) : '';
+                                  }
                             },
                         ],
                     ],
@@ -137,6 +145,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="panel-footer panel-callcenter">
             <p>
             <div>
+                <?php  if (Yii::$app->user->can('editIndexDvad') || Yii::$app->user->can('admin')): ?>
                 <?php Modal::begin([
                     'header' => '<h2>Добавить сервис</h2>',
                     'toggleButton' => [
@@ -151,6 +160,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'modelService' => $modelService,
                 ]) ?>
                 <?php Modal::end(); ?>
+                <?php endif ?>
             </div>
             </p>
             <?php Pjax::begin(); ?>
@@ -193,9 +203,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'title' => Yii::t('yii', 'Изменить'),
                                     'aria-label' => Yii::t('yii', 'Изменить'),
                                 ];
-                                return Html::a(
-                                    '<i class="material-icons button edit">edit</i>',
-                                     $id, $options, $modelService);
+                                if (Yii::$app->user->can('editIndexDvad') || Yii::$app->user->can('admin')) {
+                                    return Html::a(
+                                        '<i class="material-icons button edit">edit</i>',
+                                        $id, $options, $modelService);
+                                }
                             },
                             'delete-service' => function ($url, $modelService) {
                                 $options = [
@@ -205,8 +217,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'data-method' => 'post',
                                     'data-pjax' => '0',
                                 ];
-                                return $modelService->status_active == 1 ? Html::a('
+                                if (Yii::$app->user->can('editIndexDvad') || Yii::$app->user->can('admin')) {
+                                    return $modelService->status_active == 1 ? Html::a('
                                     <i class="material-icons button delete">delete</i>', $url, $options) : '';
+                                }
                             },
                             'redelete-service' => function ($url, $modelService) {
                                 $options = [
@@ -216,8 +230,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'data-method' => 'post',
                                     'data-pjax' => '0',
                                 ];
-                                return $modelService->status_active == 0 ? Html::a('
-                                    <i class="material-icons button redelete">undo</i>', $url, $options, [ 'title' => Yii::t('app', 'Восстановить') ]) : '';
+                                 if (Yii::$app->user->can('editIndexDvad') || Yii::$app->user->can('admin')) {
+                                     return $modelService->status_active == 0 ? Html::a('
+                                    <i class="material-icons button redelete">undo</i>', $url, $options, ['title' => Yii::t('app', 'Восстановить')]) : '';
+                                 }
                             },
                         ],
 
@@ -240,6 +256,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="panel-footer panel-callcenter">
             <p>
             <div>
+                <?php  if (Yii::$app->user->can('editIndexDvad') || Yii::$app->user->can('admin')): ?>
                 <?php Modal::begin([
                     'header' => '<h2>Добавить оффер</h2>',
                     'toggleButton' => [
@@ -254,6 +271,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'modelOfferId' => $modelOfferId,
                 ]) ?>
                 <?php Modal::end(); ?>
+                <?php endif ?>
             </div>
             </p>
             <?php Pjax::begin(); ?>
@@ -297,9 +315,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'aria-label' => Yii::t('yii', 'Изменить'),
                                     'format'=> 'raw',
                                 ];
-                                return Html::a(
-                                    '<i class="material-icons button edit">edit</i>',
-                                    $id, $options, $modelOfferId);
+                               if (Yii::$app->user->can('editIndexDvad') || Yii::$app->user->can('admin')) {
+                                   return Html::a(
+                                       '<i class="material-icons button edit">edit</i>',
+                                       $id, $options, $modelOfferId);
+                               }
                             },
                             'delete-offerid' => function ($url, $modelOfferId) {
                                 $options = [
@@ -309,8 +329,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'data-method' => 'post',
                                     'data-pjax' => '0',
                                 ];
-                                return $modelOfferId->active == 1 ? Html::a('
+                                  if (Yii::$app->user->can('editIndexDvad') || Yii::$app->user->can('admin')) {
+                                      return $modelOfferId->active == 1 ? Html::a('
                                     <i class="material-icons button delete">delete</i>', $url, $options) : '';
+                                  }
                             },
                             'redelete-offerid' => function ($url, $modelOfferId) {
                                 $options = [
@@ -320,8 +342,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'data-method' => 'post',
                                     'data-pjax' => '0',
                                 ];
-                                return $modelOfferId->active == 0 ? Html::a('
-                                    <i class="material-icons button redelete">undo</i>', $url, $options, [ 'title' => Yii::t('app', 'Восстановить') ]) : '';
+                                 if (Yii::$app->user->can('editIndexDvad') || Yii::$app->user->can('admin')) {
+                                     return $modelOfferId->active == 0 ? Html::a('
+                                    <i class="material-icons button redelete">undo</i>', $url, $options, ['title' => Yii::t('app', 'Восстановить')]) : '';
+                                 }
                             },
                         ],
 
@@ -344,6 +368,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="panel-footer panel-callcenter">
             <p>
             <div>
+                <?php  if (Yii::$app->user->can('editIndexDvad') || Yii::$app->user->can('admin')): ?>
                 <?php Modal::begin([
                     'header' => '<h2>Добавить продукт</h2>',
                     'toggleButton' => [
@@ -358,6 +383,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'modelProductId' => $modelProductId,
                 ]) ?>
                 <?php Modal::end(); ?>
+                <?php endif ?>
             </div>
             </p>
             <?php Pjax::begin(); ?>
@@ -401,9 +427,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'title' => Yii::t('yii', 'Изменить'),
                                     'aria-label' => Yii::t('yii', 'Изменить'),
                                 ];
-                                return Html::a(
-                                    '<i class="material-icons button edit">edit</i>',
-                                    $id, $options, $modelProductId);
+                               if (Yii::$app->user->can('editIndexDvad') || Yii::$app->user->can('admin')) {
+                                   return Html::a(
+                                       '<i class="material-icons button edit">edit</i>',
+                                       $id, $options, $modelProductId);
+                               }
                             },
                             'delete-productid' => function ($url, $modelProductId) {
                                 $options = [
@@ -413,8 +441,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'data-method' => 'post',
                                     'data-pjax' => '0',
                                 ];
-                                return $modelProductId->status_active == 1 ? Html::a('
+                                  if (Yii::$app->user->can('editIndexDvad') || Yii::$app->user->can('admin')) {
+                                      return $modelProductId->status_active == 1 ? Html::a('
                                     <i class="material-icons button delete">delete</i>', $url, $options) : '';
+                                  }
                             },
                             'redelete-productid' => function ($url, $modelProductId) {
                                 $options = [
@@ -424,8 +454,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'data-method' => 'post',
                                     'data-pjax' => '0',
                                 ];
-                                return $modelProductId->status_active == 0 ? Html::a('
-                                    <i class="material-icons button redelete">undo</i>', $url, $options, [ 'title' => Yii::t('app', 'Восстановить') ]) : '';
+                                if (Yii::$app->user->can('editIndexDvad') || Yii::$app->user->can('admin')) {
+                                    return $modelProductId->status_active == 0 ? Html::a('
+                                    <i class="material-icons button redelete">undo</i>', $url, $options, ['title' => Yii::t('app', 'Восстановить')]) : '';
+                                }
                             },
                         ],
                     ],

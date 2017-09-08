@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use frontend\models\Callcenter;
@@ -28,10 +29,26 @@ class DvadController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
+                'only' => [
+                    'index',
+                    'delete-country', 'redelete-country', 'delete-service', 'redelete-service', 'delete-offerid', 'redelete-offerid',
+                    'delete-productid', 'redelete-productid',
+                    'country-update', 'service-update', 'offerid-update', 'product-update'
+                ],
                 'rules' => [
                     [
+                        'actions' => ['index'],
                         'allow' => true,
-                        'roles' => ['admin','userDvad'],
+                        'roles' => ['admin','viewIndexDvad'],
+                    ],
+                    [
+                        'actions' => [
+                            'delete-country', 'redelete-country', 'delete-service', 'redelete-service', 'delete-offerid', 'redelete-offerid',
+                            'delete-productid', 'redelete-productid',
+                            'country-update', 'service-update', 'offerid-update', 'product-update'
+                        ],
+                        'allow' => true,
+                        'roles' => ['admin','editIndexDvad'],
                     ],
                 ],
             ],
@@ -99,34 +116,10 @@ class DvadController extends Controller
             $modelOfferId = new MappingOfferProductIdDvad();
             $modelProductId = new MappingProductIdDvad();
 
-            if($modelService->load(\Yii::$app->request->post()) && $modelService->validate()){
-                if ($modelService->load(Yii::$app->request->post()) && $modelService->save()) {
-                    return $this->redirect(['index']);
-                }else {
-                    return $this->redirect(['index']);
-                }
-            }
-            if($modelCountry->load(\Yii::$app->request->post()) && $modelCountry->validate()){
-                if ($modelCountry->load(Yii::$app->request->post()) && $modelCountry->save()) {
-                    return $this->redirect(['index']);
-                }else {
-                    return $this->redirect(['index']);
-                 }
-            }
-            if($modelOfferId->load(\Yii::$app->request->post()) && $modelOfferId->validate()){
-                if ($modelOfferId->load(Yii::$app->request->post()) && $modelOfferId->save()) {
-                    return $this->redirect(['index']);
-                }else {
-                    return $this->redirect(['index']);
-                }
-            }
-            if($modelProductId->load(\Yii::$app->request->post()) && $modelProductId->validate()){
-                if ($modelProductId->load(Yii::$app->request->post()) && $modelProductId->save()) {
-                    return $this->redirect(['index']);
-                }else {
-                    return $this->redirect(['index']);
-                }
-            }
+            $this->actionServiceCreate($modelService);
+            $this->actionCountryCreate($modelCountry);
+            $this->actionOfferidCreate($modelOfferId);
+            $this->actionProductCreate($modelProductId);
 
             return  $this->render('index', compact(
                 'callcenter',
@@ -147,6 +140,67 @@ class DvadController extends Controller
                 'searchModelOfferId',
                 'searchModelProductId'
             ));
+    }
+
+
+    public function actionServiceCreate($modelService)
+    {
+        if($modelService->load(\Yii::$app->request->post()) && $modelService->validate()){
+            if (Yii::$app->user->can('editIndexDvad')) {
+                if ($modelService->load(Yii::$app->request->post()) && $modelService->save()) {
+                    return $this->redirect(['index']);
+                } else {
+                    return $this->redirect(['index']);
+                }
+            }else {
+                throw new ForbiddenHttpException('Вам не разрешено производить данное действие.');
+            }
+        }
+    }
+
+    public function actionCountryCreate($modelCountry)
+    {
+        if($modelCountry->load(\Yii::$app->request->post()) && $modelCountry->validate()){
+            if (Yii::$app->user->can('editIndexDvad')) {
+                if ($modelCountry->load(Yii::$app->request->post()) && $modelCountry->save()) {
+                    return $this->redirect(['index']);
+                } else {
+                    return $this->redirect(['index']);
+                }
+            }else {
+                throw new ForbiddenHttpException('Вам не разрешено производить данное действие.');
+            }
+        }
+    }
+
+    public function actionOfferidCreate($modelOfferId)
+    {
+        if($modelOfferId->load(\Yii::$app->request->post()) && $modelOfferId->validate()){
+            if (Yii::$app->user->can('editIndexDvad')) {
+                if ($modelOfferId->load(Yii::$app->request->post()) && $modelOfferId->save()) {
+                    return $this->redirect(['index']);
+                } else {
+                    return $this->redirect(['index']);
+                }
+            }else {
+                throw new ForbiddenHttpException('Вам не разрешено производить данное действие.');
+            }
+        }
+    }
+
+    public function actionProductCreate($modelProductId)
+    {
+        if($modelProductId->load(\Yii::$app->request->post()) && $modelProductId->validate()){
+            if (Yii::$app->user->can('editIndexDvad')) {
+                if ($modelProductId->load(Yii::$app->request->post()) && $modelProductId->save()) {
+                    return $this->redirect(['index']);
+                } else {
+                    return $this->redirect(['index']);
+                }
+            }else {
+                throw new ForbiddenHttpException('Вам не разрешено производить данное действие.');
+            }
+        }
     }
 
     /**

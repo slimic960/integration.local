@@ -10,10 +10,11 @@ use common\models\MappingStatuses2K;
 use common\models\MappingStatuses2KSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 
-class TwokController extends \yii\web\Controller
+class TwokController extends Controller
 {
     /**
      * @inheritdoc
@@ -23,10 +24,24 @@ class TwokController extends \yii\web\Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
+                'only' => [
+                    'index',
+                    'delete-offer', 'redelete-offer', 'delete-statuses', 'redelete-statuses',
+                    'offer-update', 'statuses-update'
+                ],
                 'rules' => [
                     [
+                        'actions' => ['index'],
                         'allow' => true,
-                        'roles' => ['admin','userTwok'],
+                        'roles' => ['admin','viewIndexTwok'],
+                    ],
+                    [
+                        'actions' => [
+                            'delete-country', 'redelete-country', 'delete-offer-product', 'redelete-offer-product', 'delete-statuses', 'redelete-statuses',
+                            'country-update', 'offer-product-update', 'statuses-update'
+                        ],
+                        'allow' => true,
+                        'roles' => ['admin','editIndexTwok'],
                     ],
                 ],
             ],
@@ -74,22 +89,8 @@ class TwokController extends \yii\web\Controller
         $modelOffers = new MappingOfferProductId2K();
         $modelStatuses = new MappingStatuses2K();
 
-        if($modelOffers->load(\Yii::$app->request->post()) && $modelOffers->validate()){
-            if ($modelOffers->load(Yii::$app->request->post()) && $modelOffers->save()) {
-                return $this->redirect(['index']);
-            }else {
-                return $this->redirect(['index']);
-            }
-        }
-
-        if($modelStatuses->load(\Yii::$app->request->post()) && $modelStatuses->validate()){
-            if ($modelStatuses->load(Yii::$app->request->post()) && $modelStatuses->save()) {
-                return $this->redirect(['index']);
-            }else {
-                return $this->redirect(['index']);
-            }
-        }
-
+        $this->actionOffersCreate($modelOffers);
+        $this->actionStatusesCreate($modelStatuses);
 
         return  $this->render('index', compact(
             'callcenter',
@@ -102,6 +103,36 @@ class TwokController extends \yii\web\Controller
             'searchModelOffer',
             'searchModelStatuses'
         ));
+    }
+
+    public function actionOffersCreate($modelOffers)
+    {
+        if($modelOffers->load(\Yii::$app->request->post()) && $modelOffers->validate()){
+            if (Yii::$app->user->can('editIndexTwok')) {
+                if ($modelOffers->load(Yii::$app->request->post()) && $modelOffers->save()) {
+                    return $this->redirect(['index']);
+                } else {
+                    return $this->redirect(['index']);
+                }
+            }else {
+                throw new ForbiddenHttpException('Вам не разрешено производить данное действие.');
+            }
+        }
+    }
+
+    public function actionStatusesCreate($modelStatuses)
+    {
+        if($modelStatuses->load(\Yii::$app->request->post()) && $modelStatuses->validate()){
+            if (Yii::$app->user->can('editIndexTwok')) {
+                if ($modelStatuses->load(Yii::$app->request->post()) && $modelStatuses->save()) {
+                    return $this->redirect(['index']);
+                } else {
+                    return $this->redirect(['index']);
+                }
+            }else {
+                throw new ForbiddenHttpException('Вам не разрешено производить данное действие.');
+            }
+        }
     }
 
     /**
