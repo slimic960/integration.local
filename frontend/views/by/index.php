@@ -223,7 +223,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                      return $modelStatuses->status_terminal == 1 ? Html::a('
                                     <i class="material-icons button delete">delete</i>', $url, $options) : '';
                                  }
-                            },
+                                },
                             'redelete-statuses' => function ($url, $modelStatuses) {
                                 $options = [
                                     'title' => Yii::t('yii', 'Удалить'),
