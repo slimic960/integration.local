@@ -14,13 +14,13 @@ $i = 0;
     <br>
     <div class="row">
         <?php foreach ($callcenter_name as $v): ?>
-            <?php if(Yii::$app->user->can('user'.ucfirst($v->callcenter_code)) || Yii::$app->user->can('admin')): ?>
+            <?php if(Yii::$app->user->can('viewIndex'.ucfirst($v->callcenter_code)) || Yii::$app->user->can('admin')): ?>
                 <?php $i++;?>
             <?php endif ?>
         <?php endforeach; ?>
 
             <?php foreach ($callcenter_name as $v): ?>
-                <?php if(Yii::$app->user->can('user'.ucfirst($v->callcenter_code)) || Yii::$app->user->can('admin')): ?>
+                <?php if(Yii::$app->user->can('viewIndex'.ucfirst($v->callcenter_code)) || Yii::$app->user->can('admin')): ?>
                 <div class="col-sm-6 col-md-<?php if($i <= 1){echo 12;} elseif($i > 1 && $i < 10){echo 6;} elseif($i > 10){echo 4;} ?>">
                     <a href="<?= yii\helpers\Url::to(['/'.$v->callcenter_code.'/index'])?>">
                         <div class="thumbnail color-block shadow animate button-main">
